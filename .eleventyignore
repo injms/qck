@@ -1,0 +1,20 @@
+# Ignore the Sass so Eleventy can watch the compiled CSS
+_layouts/**/*.scss
+
+# Project dependencies
+.cache
+node_modules
+yarn-error.log
+.env
+credentials.json
+
+# Build directory
+site
+
+# Local Netlify folder
+.netlify
+
+# Caches
+.stylelintcache
+
+**/*readme.*
