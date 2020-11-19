@@ -1,0 +1,42 @@
+{
+  "name": "qck",
+  "version": "0.8.5",
+  "description": "A fast, elegant, and accessible portfolio.",
+  "main": "npm start",
+  "scripts": {
+    "build": "npm run build:site",
+    "build:site": "eleventy",
+    "lint": "npm run lint:sass",
+    "lint:sass": "stylelint '**/*.scss' --cache=true",
+    "start": "npm run watch:site",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:site": "eleventy --serve"
+  },
+  "keywords": [
+    "portfolio",
+    "website",
+    "fast",
+    "accessible",
+    "clean",
+    "minimal"
+  ],
+  "license": "SEE LICENSE IN license.md",
+  "author": {
+    "name": "Ian James",
+    "url": "https://inj.ms"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy-img": "^0.3.0",
+    "@injms/quack-nunjucks-filters": "^0.10.0",
+    "eleventy-plugin-i18n": "^0.1.1",
+    "exifr": "^6.0.0",
+    "prettier": "^2.1.2",
+    "probe-image-size": "^6.0.0"
+  },
+  "devDependencies": {
+    "stylelint": "^13.7.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.18.0"
+  }
+}
