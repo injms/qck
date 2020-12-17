@@ -1,0 +1,12 @@
+en-gb:
+  translation:
+    locale: "English"
+    site_name: "Ian James Photography"
+    site_default_description: "Ian's personal and professional photography portfolio."
+    photos: "Photos"
+    about: "About"
+    contact: "Get in touch"
+    cookie_and_privacy_policy: "Cookie and privacy policy"
+    accessibility_statement: "Accessibility statement"
+    rss_feed: "RSS feed"
+    json_feed: "JSON feed"
