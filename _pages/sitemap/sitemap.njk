@@ -1,0 +1,22 @@
+---
+permalink: "/sitemap.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {%- for page in collections.all %}
+    {%- if page.data.language == site.defaultLanguage %}
+      <url>
+        <loc>{{ site.baseURL }}{{ page.url | url }}</loc>
+          {%- if page.data.alternatives | length >= 1 %}
+            <xhtml:link rel="alternate" hreflang="{{ page.data.language }}" href="{{ site.baseURL }}{{ page.url | url }}" />
+            {%- for alternatives in page.data.alternatives %}
+              <xhtml:link rel="alternate" hreflang="{{ alternatives.language }}" href="{{ site.baseURL }}{{ alternatives.url }}" />
+            {%- endfor %}
+          {%- endif %}
+        <lastmod>{{ page.date | isodate }}</lastmod>
+        <changefreq>{{ page.data.changeFreq if page.data.changeFreq else "monthly" }}</changefreq>
+      </url>
+    {%- endif %}
+  {%- endfor %}
+</urlset>
