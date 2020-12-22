@@ -1,3 +1,5 @@
+const { extname } = require('path')
+const { format: prettier } = require('prettier')
 const {
   cssmin,
   debug,
@@ -16,36 +18,22 @@ const configuration = (eleventyConfig) => {
   // _only_ use the `.eleventyignore` file.
   eleventyConfig.setUseGitIgnore(false)
 
-  eleventyConfig.setBrowserSyncConfig({
-    ui: false,
-  })
-
-  eleventyConfig.addPassthroughCopy({ 'compiled-assets': '/' })
-
   eleventyConfig.setLibrary('md', markdownify)
 
   eleventyConfig.addFilter('cssmin', (css) => cssmin(css))
   eleventyConfig.addFilter('debug', (thing) => debug(thing))
-  eleventyConfig.addFilter('humandate', (datestring, locale) =>
-    humandate(datestring, locale)
-  )
   eleventyConfig.addFilter('isodate', (datestring) => isodate(datestring))
   eleventyConfig.addFilter('markdownify', (markdown) =>
-    markdownify.render(markdown)
+    markdownify.render(markdown),
   )
+  eleventyConfig.addFilter('humandate', function (datestring, locale) {
+    const setLocale = locale || this.ctx.language
+    return humandate(datestring, setLocale)
+  })
 
   // Prettifys HTML
   eleventyConfig.addTransform('html', (content, outputPath) => {
     if (outputPath.endsWith('.html')) {
-      if (isProduction === true) {
-        return htmlMinifier(content, {
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          sortAttributes: true,
-          sortClassName: true,
-        })
-      }
-
       return prettier(content, {
         parser: 'html',
       })
