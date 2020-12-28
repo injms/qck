@@ -25,6 +25,7 @@
   "dependencies": {
     "@11ty/eleventy": "^0.11.1",
     "@injms/quack-nunjucks-filters": "^0.11.13",
+    "cheerio": "^1.0.0-rc.5",
     "i18next": "^19.8.4",
     "prettier": "^2.2.1",
     "yaml": "^1.10.0"
