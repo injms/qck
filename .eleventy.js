@@ -1,4 +1,3 @@
-const { extname } = require('path')
 const { format: prettier } = require('prettier')
 const {
   cssmin,
@@ -8,10 +7,15 @@ const {
   markdownify,
 } = require('@injms/quack-nunjucks-filters')
 
-const { format: prettier } = require('prettier')
+// Allows a filter to not need the `safe` filter when returning HTML
+const { runtime: { markSafe } } = require('nunjucks')
 
-const isProduction = process.env.NODE_ENV === 'production'
+const _t = require('./_helpers/t')
 
+// Settings and configurations
+const site = require('./_data/site')
+
+// Where the magic happens
 const configuration = (eleventyConfig) => {
   // We want Eleventy to ignore the Sass files, but we don't want git to ignore
   // them - we need to tell Eleventy to ignore the `.gitignore` file (lol) and
@@ -29,6 +33,35 @@ const configuration = (eleventyConfig) => {
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
     const setLocale = locale || this.ctx.language
     return humandate(datestring, setLocale)
+  })
+
+  // Returns the translation for a specific key - like the `translate` or `t`
+  // helper function in Ruby on Rails. Useful for `<title>` and similar.
+  //
+  // !! Don't use this filter for text that'll be used in markup as it doesn't
+  // give you a fallback with the lang attribute. !!
+  //
+  // eg {{ 'photos' | i18nbare }}
+  // eg {{ 'shopping_basket.pay' | i18nbare }}
+  // Returns only the string if available; or the fallback string if not.
+  eleventyConfig.addFilter('i18nbare', function (key, locale = site.defaultLanguage) {
+    return _t(key, locale).text
+  })
+
+  // Returns the translation for a specific key with a fallback wrapped in a
+  // span with the `lang` attibrute to help meet WCAG 2.1 SC 3.1.1.
+  // https://www.w3.org/WAI/WCAG21/Understanding/language-of-page
+  // Use:
+  // eg {{ 'photos' | i18n }}
+  // eg {{ 'shopping_basket.pay' | i18n }}
+  eleventyConfig.addFilter('i18n', function (key, locale = site.defaultLanguage) {
+    const thisPagesLanguage = this.ctx?.language || locale
+    const translation = _t(key, thisPagesLanguage)
+
+    if (translation.fallback) {
+      return markSafe(`<span lang="${site.defaultLanguage}">${translation.text }</span>`)
+    }
+    return translation.text
   })
 
   // Prettifys HTML
