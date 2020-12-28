@@ -1,3 +1,5 @@
+const { extname } = require('path')
+const { load: cheerio } = require('cheerio')
 const { format: prettier } = require('prettier')
 const {
   cssmin,
@@ -33,6 +35,76 @@ const configuration = (eleventyConfig) => {
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
     const setLocale = locale || this.ctx.language
     return humandate(datestring, setLocale)
+  })
+
+  // Links to a page in the current page's locale if available; if not, falls
+  // back to linking to the default language.
+  eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
+    const thisLanguage = this.ctx.language || language
+    const linkAttributes = []
+
+    // Clean up the given URL to always have a trailing slash.
+    if (url.endsWith('/') === false) {
+      url += '/'
+    }
+
+    const pageFolder = this.ctx.page.inputPath
+      .replace(this.ctx.page.filePathStem, '')
+      .replace(extname(this.ctx.page.inputPath), '')
+
+    let key = url
+
+    if (url.startsWith(pageFolder) === false) {
+      key = pageFolder + url
+    }
+
+    // Find alternative for this key in another language; and return only the
+    // things that we need to link to the alternative page.
+    const alternatives = this.ctx.collections.all
+      .filter(({ data }) => data.alternativeKey === key)
+      .map(({ data: { page: { url }, language } }) => {
+        return {
+          url,
+          language,
+        }
+      })
+
+    // Check if there's a URL for the language we need the page in.
+    const existsInLocale = alternatives
+      .map(({ language }) => language)
+      .includes(thisLanguage)
+
+    const linkAvailableIn = existsInLocale ? thisLanguage : site.defaultLanguage
+
+    alternatives.forEach((alternative) => {
+      if (alternative.language === linkAvailableIn) {
+        linkAttributes.push(`href="${alternative.url}"`)
+      }
+    })
+
+    if (!existsInLocale) {
+      linkAttributes.push(`hreflang="${site.defaultLanguage}"`)
+    }
+
+    // If the text is fallback text, it'll be wrapped in a span with a lang. To
+    // minimise the number of unneeded elements we should move the lang
+    // attribute to the link element - so instead of having a link wrapping a
+    // span we have only a link element.
+    const $ = cheerio(
+      text.val || text, // If `text` has been marked safe, then text will be an object.
+      null,
+      false // `false` parameter to stop this being wrapped in html and body tags.
+    )
+
+    if ($('span[lang]').length === 1) {
+      const $span = $('span')
+      const lang = $span.attr('lang')
+      text = $span.text()
+
+      linkAttributes.push(`lang="${lang}"`)
+    }
+
+    return markSafe(`<a ${linkAttributes.join(' ')}>${text}</a>`)
   })
 
   // Returns the translation for a specific key - like the `translate` or `t`
