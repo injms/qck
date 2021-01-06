@@ -4,25 +4,25 @@ const site = require('../_data/site')
 
 // _t looks up the translation, and returns the string given as well as
 // whether that is a fallback:
-// eg _t('hello', 'fr') would give { text: 'Bonjour', fallback: false }
-// eg _t('hello', 'de') would give { text: 'Hello', fallback: true }
+// * eg key present: _t('hello', 'fr') would give { text: 'Bonjour', fallback:
+//   false }
+// * eg key not present: _t('hello', 'de') would give { text: 'Hello', fallback:
+//   true }
 const translate = (key, locale) => {
-  const config = Object.assign(site.i18n, { lng: locale })
-
   const i18n = i18next.createInstance()
-  i18n.init(config)
+  i18n.init({
+    ...site.i18n,
+    lng: locale,
+  })
 
-  let keyExistsInCurrentLocale
+  const test = i18next.createInstance()
+  test.init({
+    ...site.i18n,
+    lng: locale,
+    fallbackLng: false,
+  })
 
-  if (site.defaultLanguage === locale) {
-    keyExistsInCurrentLocale = !i18n.exists(key)
-
-    if (!i18n.exists(key)) {
-      console.warn(`\n ! Key "${key}" has no translation at all.\n`)
-    }
-  } else {
-    keyExistsInCurrentLocale = i18n.t(key) === i18n.t(key, { lng: site.defaultLanguage })
-  }
+  const keyExistsInCurrentLocale = test.t(key) === key
 
   return {
     text: i18n.t(key),
