@@ -93,7 +93,7 @@ const configuration = (eleventyConfig) => {
     const $ = cheerio(
       text.val || text, // If `text` has been marked safe, then text will be an object.
       null,
-      false // `false` parameter to stop this being wrapped in html and body tags.
+      false, // `false` parameter to stop this being wrapped in html and body tags.
     )
 
     if ($('span[lang]').length === 1) {
