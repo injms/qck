@@ -22,7 +22,10 @@ const translate = (key, locale) => {
     fallbackLng: false,
   })
 
-  const keyExistsInCurrentLocale = test.t(key) === key
+  // To allow for namespaces, we need to see if they key (eg 'photos', or
+  // 'project:orion') ends with the default, non-namespaced key (eg 'photos, or
+  // 'orion'.)
+  const keyExistsInCurrentLocale = key.endsWith(test.t(key))
 
   return {
     text: i18n.t(key),
