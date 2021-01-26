@@ -12,6 +12,7 @@ const {
 // Allows a filter to not need the `safe` filter when returning HTML
 const { runtime: { markSafe } } = require('nunjucks')
 
+// Translation helper
 const _t = require('./_helpers/t')
 
 // Ensures URL and page key consistancy

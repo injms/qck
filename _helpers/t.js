@@ -1,4 +1,5 @@
 const i18next = require('i18next')
+const Pseudo = require('i18next-pseudo')
 
 const site = require('../_data/site')
 
@@ -10,17 +11,37 @@ const site = require('../_data/site')
 //   true }
 const translate = (key, locale) => {
   const i18n = i18next.createInstance()
-  i18n.init({
-    ...site.i18n,
-    lng: locale,
-  })
+  let pseudo = !!site.pseudoLocalisation
+
+  if (key.startsWith('url:')) {
+    pseudo = false
+  }
+
+  i18n
+    .use(new Pseudo({
+      languageToPseudo: 'en-gb',
+      wrapped: true,
+      enabled: pseudo,
+    }))
+    .init({
+      ...site.i18n,
+      lng: locale,
+      postProcess: ['pseudo'],
+    })
 
   const test = i18next.createInstance()
-  test.init({
-    ...site.i18n,
-    lng: locale,
-    fallbackLng: false,
-  })
+  test
+    .use(new Pseudo({
+      languageToPseudo: 'en-gb',
+      wrapped: true,
+      enabled: pseudo,
+    }))
+    .init({
+      ...site.i18n,
+      lng: locale,
+      fallbackLng: false,
+      postProcess: ['pseudo'],
+    })
 
   // To allow for namespaces, we need to see if they key (eg 'photos', or
   // 'project:orion') ends with the default, non-namespaced key (eg 'photos, or
