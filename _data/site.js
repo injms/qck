@@ -10,6 +10,8 @@ site.i18n = {
   debug: false,
   fallbackLng: site.defaultLanguage,
   lowerCaseLng: true,
+  ns: ['common', 'url', 'project'],
+  defaultNS: 'common',
   resources: getTranslations('_locales'),
 }
 

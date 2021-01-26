@@ -1,12 +1,33 @@
 en-gb:
-  translation:
+  common:
     locale: "English"
+    skip_to_content: "Skip to content"
     site_name: "Ian James Photography"
     site_default_description: "Ian's personal and professional photography portfolio."
+    main_navigation: "Main navigation"
+
     photos: "Photos"
     about: "About"
     contact: "Get in touch"
+
+    legal_footer: "Legal things"
     cookie_and_privacy_policy: "Cookie and privacy policy"
     accessibility_statement: "Accessibility statement"
     rss_feed: "RSS feed"
     json_feed: "JSON feed"
+
+    projects: "Photo projects"
+    next_photo: "Next photo"
+    previous_photo: "Previous photo"
+
+    read_this_page_in_different_language: "Read this page in a different language"
+  project:
+    arctic_terns: "Arctic terns"
+    puffins: "Puffins"
+
+  # The strings to use for URIs. The `url` namespace is the first place that
+  # a key is looked up in, then it falls back to `common`. Both are slugified.
+  url:
+    projects: "projects"
+    tags: "tags"
+    photos: "photos"
