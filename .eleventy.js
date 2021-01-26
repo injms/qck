@@ -14,6 +14,9 @@ const { runtime: { markSafe } } = require('nunjucks')
 
 const _t = require('./_helpers/t')
 
+// Ensures URL and page key consistancy
+const cleanKey = require('./_helpers/cleanKey')
+
 // Settings and configurations
 const site = require('./_data/site')
 
@@ -43,16 +46,11 @@ const configuration = (eleventyConfig) => {
     const thisLanguage = this.ctx.language || language
     const linkAttributes = []
 
-    // Clean up the given URL to always have a trailing slash.
-    if (url.endsWith('/') === false) {
-      url += '/'
-    }
-
     const pageFolder = this.ctx.page.inputPath
       .replace(this.ctx.page.filePathStem, '')
       .replace(extname(this.ctx.page.inputPath), '')
 
-    let key = url
+    let key = cleanKey(url)
 
     if (url.startsWith(pageFolder) === false) {
       key = pageFolder + url
