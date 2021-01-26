@@ -18,6 +18,9 @@ const _t = require('./_helpers/t')
 // Ensures URL and page key consistancy
 const cleanKey = require('./_helpers/cleanKey')
 
+// Get the collection for the page key, and an (optional) page parameter
+const get = require('./_helpers/get')
+
 // Settings and configurations
 const site = require('./_data/site')
 
@@ -39,6 +42,15 @@ const configuration = (eleventyConfig) => {
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
     const setLocale = locale || this.ctx.language
     return humandate(datestring, setLocale)
+  })
+
+
+  eleventyConfig.addFilter('get', function (key, parameter, locale) {
+    const { value, fallback } = get.bind(this)({ key, parameter, locale })
+
+    return fallback === true
+      ? value
+      : markSafe(`<span lang="${site.defaultLanguage}">${value}</span>`)
   })
 
   // Links to a page in the current page's locale if available; if not, falls
