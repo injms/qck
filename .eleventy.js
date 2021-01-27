@@ -12,7 +12,14 @@ const {
 // Allows a filter to not need the `safe` filter when returning HTML
 const { runtime: { markSafe } } = require('nunjucks')
 
+// Translation helper
 const _t = require('./_helpers/t')
+
+// Ensures URL and page key consistancy
+const cleanKey = require('./_helpers/cleanKey')
+
+// Get the collection for the page key, and an (optional) page parameter
+const get = require('./_helpers/get')
 
 // Settings and configurations
 const site = require('./_data/site')
@@ -37,22 +44,26 @@ const configuration = (eleventyConfig) => {
     return humandate(datestring, setLocale)
   })
 
+
+  eleventyConfig.addFilter('get', function (key, parameter, locale) {
+    const { value, fallback } = get.bind(this)({ key, parameter, locale })
+
+    return fallback === true
+      ? value
+      : markSafe(`<span lang="${site.defaultLanguage}">${value}</span>`)
+  })
+
   // Links to a page in the current page's locale if available; if not, falls
   // back to linking to the default language.
   eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
     const thisLanguage = this.ctx.language || language
     const linkAttributes = []
 
-    // Clean up the given URL to always have a trailing slash.
-    if (url.endsWith('/') === false) {
-      url += '/'
-    }
-
     const pageFolder = this.ctx.page.inputPath
       .replace(this.ctx.page.filePathStem, '')
       .replace(extname(this.ctx.page.inputPath), '')
 
-    let key = url
+    let key = cleanKey(url)
 
     if (url.startsWith(pageFolder) === false) {
       key = pageFolder + url
