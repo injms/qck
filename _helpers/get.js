@@ -61,7 +61,7 @@ const get = function ({
   return {
     value: _.get(
       thisPageThisLanguage || thisPageFallbackLanguage,
-      parameter.split('.').filter(x => !!x),
+      parameter,
     ),
     fallback: !!thisPageThisLanguage,
   }

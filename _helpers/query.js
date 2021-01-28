@@ -49,11 +49,7 @@ const query = function ({
       const page = {}
 
       columns.forEach(parameter => {
-        const deepParameter = parameter.split('.').filter(x => !!x)
-        const requestedParameter = _.get(
-          data,
-          deepParameter,
-        )
+        const requestedParameter = _.get(data, parameter)
 
         if (requestedParameter) {
           _.set(page, parameter, requestedParameter)
