@@ -26,8 +26,8 @@ const query = function ({
   collectionName = 'all',
   limit,
 }) {
-  if (typeof keys === 'string') rows = [rows]
-  if (typeof parameters === 'string') columns = [columns]
+  if (typeof rows === 'string') rows = [rows]
+  if (typeof columns === 'string') columns = [columns]
   if (typeof locales === 'string') locales = [locales]
 
   const collection = this.ctx.collections?.[collectionName] || this.ctx.collections.all
