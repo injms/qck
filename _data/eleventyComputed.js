@@ -1,9 +1,14 @@
 const i18next = require('i18next')
-const { dirname } = require('path')
+const { dirname, extname, join } = require('path')
+
+const cleanKey = require('../_helpers/cleanKey')
 
 const site = require('./site')
 
 module.exports = {
+  layout: function ({ layout }) {
+    return layout || 'default'
+  },
   language: function ({ language }) {
     return language.toLowerCase() || site.defaultLanguage
   },
@@ -18,14 +23,19 @@ module.exports = {
   // direction - string: either 'rtl' or 'ltr'
   // ---------------------------------------------------------------------------
   // Returns the text direction for the page's language.
-  direction: function ({ language }) {
-    if (typeof language === 'string') {
-      const i18n = i18next.createInstance()
-      i18n.init()
-      return i18n.dir(language)
+  direction: function ({ direction, language }) {
+    if (typeof language !== 'string') {
+      throw new Error('`language` should be a string.')
     }
 
-    return 'ltr'
+    if (direction) {
+      return direction
+    }
+
+      const i18n = i18next.createInstance()
+      i18n.init()
+
+      return i18n.dir(language)
   },
 
   // ---------------------------------------------------------------------------
@@ -36,6 +46,7 @@ module.exports = {
   // French would have different files but have the same key.
   // The key can be manually set if rqeuired - this will take precedence over
   // the automatically generated key.
+  //
   // Assumes a folder-per-page set up - not a file-per-page set up; for example:
   //  → about/
   //    ↳ about.md
@@ -48,13 +59,16 @@ module.exports = {
       return alternativeKey
     }
 
-    let key = dirname(page.inputPath)
+    const cleanedKey = cleanKey(dirname(page.inputPath))
 
-    if (key.endsWith('/') === false) {
-      key += '/'
+    return cleanedKey
+  },
+  pageID: function ({ pageID, page: { inputPath } }) {
+    if (pageID) {
+      return pageID
     }
 
-    return key
+    return inputPath
   },
 
   // ---------------------------------------------------------------------------
