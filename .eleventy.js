@@ -45,6 +45,16 @@ const configuration = (eleventyConfig) => {
     return humandate(datestring, setLocale)
   })
 
+  eleventyConfig.addFilter('shuffle', function (collection) {
+    const clonedCollection = _.cloneDeep(collection)
+
+    for (let idx = clonedCollection.length - 1; idx > 0; idx--) {
+      const jdx = Math.floor(Math.random() * (idx + 1))
+      ;[clonedCollection[idx], clonedCollection[jdx]] = [clonedCollection[jdx], clonedCollection[idx]]
+    }
+
+    return clonedCollection
+  })
 
   eleventyConfig.addFilter('get', function (key, parameter, locale) {
     const { value, fallback } = get.bind(this)({ key, parameter, locale })
