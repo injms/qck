@@ -6,6 +6,16 @@ const cleanKey = require('../_helpers/cleanKey')
 const site = require('./site')
 
 module.exports = {
+  metadata: function ({ metadata, language }) {
+    const i18n = i18next.createInstance()
+    i18n.init(site.i18n)
+
+    const defaults = {
+      description: i18n.t('site_default_description', { lng: language }),
+    }
+
+    return Object.assign(defaults, metadata)
+  },
   layout: function ({ layout }) {
     return layout || 'default'
   },
