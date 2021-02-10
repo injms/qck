@@ -77,6 +77,14 @@ const configuration = (eleventyConfig) => {
       : markSafe(`<span lang="${site.defaultLanguage}">${value}</span>`)
   })
 
+  eleventyConfig.addFilter('getkey', function (parameter, key, locale) {
+    if (!parameter) return 'Error - no parameter set'
+
+    const { value } = get.bind(this)({ key, parameter, locale })
+
+    return value
+  })
+
   // Links to a page in the current page's locale if available; if not, falls
   // back to linking to the default language.
   eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
