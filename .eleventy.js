@@ -65,6 +65,10 @@ const configuration = (eleventyConfig) => {
       .filter(({ data: { alternativeKey } }) => !exclusions.includes(alternativeKey))
   })
 
+  eleventyConfig.addFilter('limit_to', function (collection, limit = 3) {
+    return collection.slice(0, limit)
+  })
+
   eleventyConfig.addFilter('get', function (key, parameter, locale) {
     const { value, fallback } = get.bind(this)({ key, parameter, locale })
 
