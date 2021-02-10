@@ -19,6 +19,11 @@ module.exports = {
   layout: function ({ layout }) {
     return layout || 'default'
   },
+  projectKey: function ({ project }) {
+    if (project) {
+      return project.replace(' ', '_').toLowerCase()
+    }
+  },
   language: function ({ language }) {
     return language.toLowerCase() || site.defaultLanguage
   },
