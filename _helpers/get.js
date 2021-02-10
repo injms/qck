@@ -3,7 +3,7 @@ const _ = {
 }
 
 const cleanKey = require('./cleanKey')
-const query = require('./query')
+const q = require('./query')
 
 const site = require('../_data/site')
 
@@ -34,9 +34,11 @@ const get = function ({
     throw new Error('No parameter supplied to `get` helper function.')
   }
 
-  const q = query.bind(this)
+  const query = q.bind(this.ctx.collections[collectionName] || this.ctx.collections.all)
 
   key = cleanKey(key)
+
+  if (parameter !== 'date') parameter = `data.${parameter}`
 
   // The order of language override should be:
   //   1 - given locale from `locale` variable passed in
@@ -44,18 +46,22 @@ const get = function ({
   //   3 - the site's default language
   const desiredLanguage = (locale || this.ctx?.language) || site.defaultLanguage
 
-  const [thisPageThisLanguage] = q({
-    rows: key,
-    collectionName,
-    columns: parameter,
-    locales: desiredLanguage,
+  const [thisPageThisLanguage] = query({
+    select: parameter,
+    where: [
+      `data.alternativeKey = ${key}`,
+      `data.language = ${desiredLanguage}`,
+    ],
+    limit: 1,
   })
 
-  const [thisPageFallbackLanguage] = q({
-    rows: key,
-    collectionName,
-    columns: parameter,
-    locales: site.defaultLanguage,
+  const [thisPageFallbackLanguage] = query({
+    select: parameter,
+    where: [
+      `data.alternativeKey = ${key}`,
+      `data.language = ${site.defaultLanguage}`,
+    ],
+    limit: 1,
   })
 
   return {

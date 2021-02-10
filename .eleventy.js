@@ -20,6 +20,7 @@ const cleanKey = require('./_helpers/cleanKey')
 
 // Get the collection for the page key, and an (optional) page parameter
 const get = require('./_helpers/get')
+const q = require('./_helpers/query')
 
 // Settings and configurations
 const site = require('./_data/site')
