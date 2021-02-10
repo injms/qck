@@ -56,6 +56,15 @@ const configuration = (eleventyConfig) => {
     return clonedCollection
   })
 
+  eleventyConfig.addFilter('exclude', function (collection, exclusions = []) {
+    if (typeof exclusions === 'string') {
+      exclusions = [exclusions]
+    }
+
+    return collection
+      .filter(({ data: { alternativeKey } }) => !exclusions.includes(alternativeKey))
+  })
+
   eleventyConfig.addFilter('get', function (key, parameter, locale) {
     const { value, fallback } = get.bind(this)({ key, parameter, locale })
 
