@@ -222,6 +222,25 @@ const configuration = (eleventyConfig) => {
     return markSafe(`<a ${linkAttributes.join(' ')}>${text}</a>`)
   })
 
+  // Returns the translation for a specific key with a fallback wrapped in a
+  // span with the `lang` attibrute to help meet WCAG 2.1 SC 3.1.1.
+  // https://www.w3.org/WAI/WCAG21/Understanding/language-of-page
+  // Use:
+  // eg {{ 'photos' | i18n }}
+  // eg {{ 'shopping_basket.pay' | i18n }}
+  eleventyConfig.addFilter('i18n', function (key, locale) {
+    const thisPagesLanguage = (locale || this.ctx?.language) || site.defaultLanguage
+    const { fallback, text } = _t(key, thisPagesLanguage)
+
+    if (fallback) {
+      return markSafe(
+        `<span lang="${site.defaultLanguage}">${text}</span>`,
+      )
+    } else {
+      return text
+    }
+  })
+
   // Returns the translation for a specific key - like the `translate` or `t`
   // helper function in Ruby on Rails. Useful for `<title>` and similar.
   //
@@ -233,6 +252,11 @@ const configuration = (eleventyConfig) => {
   // Returns only the string if available; or the fallback string if not.
   eleventyConfig.addFilter('i18nbare', function (key, locale = site.defaultLanguage) {
     return _t(key, locale).text
+  })
+
+  //
+  eleventyConfig.addFilter('i18nurl', function (key, locale = site.defaultLanguage) {
+    return _t(`url:${key}`, locale).text
   })
 
   // Returns the translation for a specific key with a fallback wrapped in a
