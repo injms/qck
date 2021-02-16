@@ -325,6 +325,27 @@ const configuration = (eleventyConfig) => {
     return photos
   })
 
+  // This isn't strictly speaking a proper collection - it's an array of the
+  // different projects for use on the gallery page.
+  eleventyConfig.addCollection('projects', function (collection) {
+    const projectKeys = q.bind(collection.getAll())({
+      select: 'data.projectKey',
+      where: `data.language = ${site.defaultLanguage}`,
+    })
+      .map(({ data }) => data?.projectKey) // Just the key please.
+      .filter((item) => !!item) // Remove any undefineds
+      .filter((item, position, array) => array.indexOf(item) === position) // Dedupe
+      .map((projectKey) => {
+        return {
+          key: projectKey,
+          nameKey: `project:${projectKey}`,
+          slug: projectKey.replace('_', '-'),
+        }
+      })
+
+    return projectKeys
+  })
+
 
     if (translation.fallback) {
       return markSafe(`<span lang="${site.defaultLanguage}">${translation.text }</span>`)
