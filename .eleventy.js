@@ -8,6 +8,7 @@ const {
   isodate,
   markdownify,
 } = require('@injms/quack-nunjucks-filters')
+const Image = require('@11ty/eleventy-img')
 
 // Allows a filter to not need the `safe` filter when returning HTML
 const { runtime: { markSafe } } = require('nunjucks')
@@ -21,6 +22,9 @@ const cleanKey = require('./_helpers/cleanKey')
 // Get the collection for the page key, and an (optional) page parameter
 const get = require('./_helpers/get')
 const q = require('./_helpers/query')
+
+// Given a width and a height, returns a name for the aspect ratio
+const aspectRatio = require('./_helpers/calculateAspectRatio')
 
 // Settings and configurations
 const site = require('./_data/site')
@@ -347,10 +351,59 @@ const configuration = (eleventyConfig) => {
   })
 
 
-    if (translation.fallback) {
-      return markSafe(`<span lang="${site.defaultLanguage}">${translation.text }</span>`)
+  eleventyConfig.addNunjucksAsyncShortcode('image', async function (filename, alt = '', sizes = '100w', outputFormat = ['jpeg']) {
+    const resizeTo = () => {
+      if (site.production === false) {
+        return [480, 1080]
+      }
+
+      const minimum = 240
+      const maximum = 1080
+      const interval = 40
+
+      const sizes = [minimum]
+
+      while (sizes[sizes.length - 1] < maximum) {
+        if (sizes[sizes.length - 1] + interval < maximum) {
+          sizes.push(sizes[sizes.length - 1] + interval)
+        } else {
+          sizes.push(maximum)
+        }
+      }
+
+      return sizes
     }
-    return translation.text
+
+    const imageMetadata = await Image(filename, {
+      widths: resizeTo(),
+      formats: [outputFormat].flat(),
+      urlPath: '/assets/images/',
+      outputDir: './site/assets/images/',
+      filenameFormat: function (id, src, width, format, options) {
+        const name = basename(src, extname(src))
+        // id: hash of the original image
+        // src: original image path
+        // width: current width in px
+        // format: current file format
+        // options: set of options passed to the Image call
+        return `${name}-${width}w-${id}.${format}`
+      },
+    })
+
+    const imageSrc = imageMetadata[outputFormat[0]][0]
+
+    const imageAttributes = {
+      alt,
+      class: `responsive-image responsive-image--${aspectRatio({
+        width: imageSrc.width,
+        height: imageSrc.height,
+      })}`,
+      decoding: 'async',
+      loading: 'lazy',
+      sizes,
+    }
+
+    return Image.generateHTML(imageMetadata, imageAttributes)
   })
 
   // Prettifys HTML
