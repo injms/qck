@@ -1,5 +1,11 @@
-const { extname } = require('path')
-const { load: cheerio } = require('cheerio')
+const {
+  extname,
+  basename,
+} = require('path')
+const _ = {
+  cloneDeep: require('lodash/cloneDeep'),
+}
+const { load: cheerio, html: cheerioHTML } = require('cheerio')
 const { format: prettier } = require('prettier')
 const {
   cssmin,
