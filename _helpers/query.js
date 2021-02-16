@@ -15,7 +15,7 @@ const site = require('../_data/site')
  * Sort of follows the way SQL does things.
  *
  * @param {queryConfig} config
- * @param {(string | string[])} config.select=* Which bits of the page to return - eg title, permalink, content...
+ * @param {string | string[]} config.select=* Which bits of the page to return - eg title, permalink, content...
  * @param {string | string[]} config.where=* Conditions eg `locale = en-gb`
  * @param {string} config.orderBy='date desc' The key and the direction in which to order things.
  * @param {number} config.limit - The number of results to be returned. Defaults to no limit.
