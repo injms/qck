@@ -119,6 +119,44 @@ const configuration = (eleventyConfig) => {
     },
   )
 
+  // Returns only the URI to the page - useful for things in the head.
+  eleventyConfig.addFilter('href_to',
+    function (key, language) {
+      const thisLanguage = (language || this.ctx?.language) || site.defaultLanguage
+
+      // Find alternative for this key in another language; and return only the
+      // things that we need to link to the alternative page.
+      const alternatives = q.bind(this.ctx.collections.all)({
+        select: [
+          'data.page.url',
+          'data.language',
+        ],
+        where: [
+          `data.alternativeKey = ${cleanKey(key)}`,
+        ],
+      })
+        .map(({ data: { page: { url }, language } }) => {
+          return {
+            url,
+            language,
+          }
+        })
+
+      // Check if there's a URL for the language we need the page in.
+      const existsInLocale = alternatives
+        .map(({ language }) => language)
+        .includes(thisLanguage)
+
+      const linkAvailableIn = existsInLocale ? thisLanguage : site.defaultLanguage
+
+      const r = alternatives
+        .filter((alternative) => alternative.language === linkAvailableIn)
+        .map(({ url }) => url)
+
+      // console.log(r, thisLanguage)
+      return r
+    })
+
   // Links to a page in the current page's locale if available; if not, falls
   // back to linking to the default language.
   eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
