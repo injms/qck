@@ -1,5 +1,6 @@
 const i18next = require('i18next')
 const { dirname, extname, join } = require('path')
+const { readdirSync } = require('fs')
 
 const cleanKey = require('../_helpers/cleanKey')
 
@@ -22,6 +23,18 @@ module.exports = {
   projectKey: function ({ project }) {
     if (project) {
       return project.replace(' ', '_').toLowerCase()
+    }
+  },
+  image: function ({ image, type, page }) {
+    if (image) return image
+
+    if (type === 'photo') {
+      const folder = dirname(page.inputPath)
+      const file = readdirSync(folder).filter(filename => {
+        return extname(filename) === '.jpg'
+      })
+
+      return join(folder, file[0])
     }
   },
   language: function ({ language }) {
@@ -47,10 +60,10 @@ module.exports = {
       return direction
     }
 
-      const i18n = i18next.createInstance()
-      i18n.init()
+    const i18n = i18next.createInstance()
+    i18n.init()
 
-      return i18n.dir(language)
+    return i18n.dir(language)
   },
 
   // ---------------------------------------------------------------------------
