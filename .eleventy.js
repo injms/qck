@@ -85,6 +85,40 @@ const configuration = (eleventyConfig) => {
     return value
   })
 
+  // Returns the language of a page being linked to **only if** the page is a
+  // different language to the current page; used for the `hreflang` atribute on
+  // both the `link` and `a` elements.
+  eleventyConfig.addFilter('hreflang',
+  /**
+  * @param  {string} key The key of the page being linked to.
+  * @param  {string} [language] The language of the page being linked from.
+  * @returns {string} [language] The language code of the page being linked to if
+  * different to the page that the link is on.
+  */
+    function (key, language) {
+      const thisLanguage = (language || this.ctx?.language) || site.defaultLanguage
+
+      // Find all of the languages that the page is available in, and return an
+      // array of those languages to be examined.
+      const languagesThatThePageIsAvailableIn = q
+        .bind(this.ctx.collections.all)({
+          select: 'data.language',
+          where: `data.alternativeKey = ${cleanKey(key)}`,
+        })
+        .map(({ data: { language } }) => language)
+
+      // Check if there's a version of this page in the lanugage that we want.
+      const existsInLocale = languagesThatThePageIsAvailableIn.includes(thisLanguage)
+
+      // console.log(key, thisLanguage, existsInLocale)
+
+      // We only need to return something if there **is not** a page available in
+      // the language that we want - the `hreflang` attribute is only needed when
+      // going from a page in one language to a page in a different language.
+      if (!existsInLocale) return site.defaultLanguage
+    },
+  )
+
   // Links to a page in the current page's locale if available; if not, falls
   // back to linking to the default language.
   eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
