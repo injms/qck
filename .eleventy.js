@@ -259,15 +259,72 @@ const configuration = (eleventyConfig) => {
     return _t(`url:${key}`, locale).text
   })
 
-  // Returns the translation for a specific key with a fallback wrapped in a
-  // span with the `lang` attibrute to help meet WCAG 2.1 SC 3.1.1.
-  // https://www.w3.org/WAI/WCAG21/Understanding/language-of-page
-  // Use:
-  // eg {{ 'photos' | i18n }}
-  // eg {{ 'shopping_basket.pay' | i18n }}
-  eleventyConfig.addFilter('i18n', function (key, locale = site.defaultLanguage) {
-    const thisPagesLanguage = this.ctx?.language || locale
-    const translation = _t(key, thisPagesLanguage)
+  eleventyConfig.addFilter('addClass', function (element, className) {
+    if (typeof element === 'string') {
+      element = {
+        val: `<span>${element}</span>`,
+      }
+    }
+
+    const $ = cheerio(
+      element.val,
+      null,
+      false, // `false` parameter to stop this being wrapped in html and body tags.
+    )
+
+    const elementWithClass = $('*:first-child').addClass(className)
+
+    return markSafe(cheerioHTML(elementWithClass))
+  })
+
+  eleventyConfig.addFilter('addRel', function (element, rel) {
+    if (typeof element === 'string') {
+      element = {
+        val: `<span>${element}</span>`,
+      }
+    }
+
+    const $ = cheerio(
+      element.val,
+      null,
+      false, // `false` parameter to stop this being wrapped in html and body tags.
+    )
+
+    const elementWithClass = $('*:first-child').attr('rel', rel)
+
+    return markSafe(cheerioHTML(elementWithClass))
+  })
+
+  eleventyConfig.addFilter('addId', function (element, id) {
+    if (typeof element === 'string') {
+      element = {
+        val: `<span>${element}</span>`,
+      }
+    }
+
+    const $ = cheerio(
+      element.val,
+      null,
+      false, // `false` parameter to stop this being wrapped in html and body tags.
+    )
+
+    const elementWithClass = $('*:first-child').attr('id', id)
+
+    return markSafe(cheerioHTML(elementWithClass))
+  })
+
+  eleventyConfig.addCollection('photos', function (collection) {
+    const photos = q.bind(collection.getAll())({
+      where: [
+        'data.type = photo',
+        `data.language = ${site.defaultLanguage}`,
+      ],
+      orderBy: 'data.title ASC',
+    })
+
+    return photos
+  })
+
 
     if (translation.fallback) {
       return markSafe(`<span lang="${site.defaultLanguage}">${translation.text }</span>`)
