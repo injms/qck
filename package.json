@@ -26,14 +26,16 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy-img": "^0.8.0",
     "@injms/quack-nunjucks-filters": "^0.11.13",
     "cheerio": "^1.0.0-rc.5",
-    "i18next": "^19.8.4",
+    "i18next": "^19.8.7",
+    "lodash": "^4.17.20",
     "prettier": "^2.2.1",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
-    "eslint": "^7.18.0",
+    "eslint": "^7.20.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
