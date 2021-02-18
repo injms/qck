@@ -1,0 +1,156 @@
+{% set metadataDescription = metadata.description if metadata.description else 'site_default_description' | i18nbare(language) %}
+
+<!DOCTYPE html>
+<html lang="{{ language }}" dir="{{ direction }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ title | lower }} - {{ 'site_name' | i18nbare(language) | lower }}</title>
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <meta name="rating" content="general">
+    <meta name="format-detection" content="telephone=no">
+    {% if site.themeColour %}
+      <meta name="theme-color" content="{{ site.themeColour }}">
+    {% endif %}
+
+    <link rel="canonical" href="{{ site.baseURL }}{{ alternativeKey | href_to }}"
+        {% if alternativeKey | hreflang %}
+          hreflang="{{ alternativeKey | hreflang }}"
+        {% endif %}
+    >
+
+    {% for alternative in alternatives -%}
+      <link rel="alternate" href="{{ site.baseURL }}{{ alternative.url }}" hreflang="{{ alternative.language }}">
+    {%- endfor %}
+
+    {% if previousPhoto %}
+      <link
+        rel="prev"
+        href="{{ site.baseURL }}{{ previousPhoto.data.alternativeKey | href_to }}"
+        {% if previousPhoto.data.alternativeKey | hreflang %}
+          hreflang="{{ previousPhoto.data.alternativeKey | hreflang }}"
+        {% endif %}
+      >
+    {% endif -%}
+    {% if nextPhoto -%}
+      <link
+        rel="next"
+        href="{{ site.baseURL }}{{ nextPhoto.data.alternativeKey | href_to }}"
+        {% if nextPhoto.data.alternativeKey | hreflang %}
+          hreflang="{{ nextPhoto.data.alternativeKey | hreflang }}"
+        {% endif %}
+      >
+    {% endif %}
+
+    <meta name="description" content="{{ metadata.description }}">
+
+    {% if site.twitter -%}
+      <meta name="twitter:card" content="{{ 'summary_large_image' if image else 'summary' }}">
+      {%- if site.twitter.site -%}
+        <meta name="twitter:site" content="{{ site.twitter.site | replace('@', '') }}">
+      {%- endif %}
+      {%- if site.twitter.creator -%}
+        <meta name="twitter:creator" content="{{ site.twitter.creator | replace('@', '') }}">
+      {%- endif -%}
+      <meta name="twitter:url" content="{{ site.baseURL }}{{ page.url }}">
+      <meta name="twitter:title" content="{{ title }}">
+      <meta name="twitter:description" content="{{ metadata.description }}">
+    {%- endif -%}
+    <meta name="twitter:dnt" content="on">
+
+    {% if site.opengraph %}
+      <meta property="og:url" content="{{ site.baseURL }}{{ page.url }}">
+      <meta property="og:type" content="{{ site.opengraph.type }}">
+      <meta property="og:site_name" content="{{ 'site_name' | i18nbare }}">
+      <meta property="og:title" content="{{ title }}">
+      <meta property="og:description" content="{{ metadata.description }}">
+    {% endif %}
+
+    {% if image %}
+      <meta property="og:image" content="{{ site.baseURL }}/{{ image }}">
+
+      {% if image_type %}
+        <meta property="og:image:type" content="{{ image_type }}">
+      {% endif %}
+
+      {% if image_alt %}
+        <meta property="og:image:alt" content="{{ image_alt }}">
+      {% endif %}
+
+      {% if image_height %}
+        <meta property="og:image:height" content="{{ image_height }}">
+      {% endif %}
+
+      {% if image_width %}
+        <meta property="og:image:width" content="{{ image_width }}">
+      {% endif %}
+    {% endif %}
+
+    {% for key, values in site.rel %}
+      {% for value in values %}
+        <link rel="{{ key }}" href="{{ value }}">{# TODO: add `hreflang` attribute  #}
+      {%- endfor %}
+    {% endfor %}
+
+    {% if site.webmasterVerifications %}
+      {%- if site.webmasterVerifications.google -%}
+        <meta name="google-site-verification" content="{{ site.webmasterVerifications.google }}">
+      {% endif %}
+
+      {%- if site.webmasterVerifications.pinterest -%}
+        <meta name="p:domain_verify" content="{{ site.webmasterVerifications.pinterest }}">
+      {% endif %}
+
+      {%- if site.webmasterVerifications.bing -%}
+        <meta name="msvalidate.01" content="{{ site.webmasterVerifications.bing }}">
+      {% endif %}
+
+      {%- if site.webmasterVerifications.alexa -%}
+        <meta name="alexaVerifyID" content="{{ site.webmasterVerifications.alexa }}">
+      {% endif %}
+
+      {%- if site.webmasterVerifications.yandex -%}
+        <meta name="yandex-verification" content="{{ site.webmasterVerifications.yandex }}">
+      {% endif %}
+
+      {%- if site.webmasterVerifications.baidu -%}
+        <meta name="baidu-site-verification" content="{{ site.webmasterVerifications.baidu }}">
+      {% endif %}
+    {% endif %}
+  </head>
+
+  <body>
+    {% include "components/_header.njk" %}
+
+    {% if alternatives | length !== 0 %}
+      <h2>{{ 'read_this_page_in_different_language' | i18n }}</h2>
+      <ul>
+        {% for alternative in alternatives %}
+          <a rel="alternate"
+            href="{{ site.baseURL }}{{ alternative.url }}"
+            hreflang="{{ alternative.language }}"
+            lang="{{ alternative.language }}">
+            {{ alternative.languageName }}
+          </a>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% block content %}
+      <main class="wrapper" id="content">
+        <h1>{{ title }}</h1>
+        {{ content | safe }}
+      </main>
+    {% endblock %}
+
+    <footer class="ftr">
+      <h2>{{ 'legal_footer' | i18n }}</h2>
+      <ul>
+        <li>{{ 'cookie_and_privacy_policy' | i18n | link_to('/cookie-and-privacy-policy/') }}</li>
+      </ul>
+    </footer>
+  </body>
+</html>

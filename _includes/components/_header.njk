@@ -1,0 +1,28 @@
+<p>
+  <a href="#content" class="skip-to-content">
+    {{ 'skip_to_content' | i18n }}
+  </a>
+</p>
+
+<header class="hdr">
+  <p>
+    <a href="/" class="logo">
+      {{ 'site_name' | i18n }}
+    </a> -
+    {{ 'site_default_description' | i18n }}
+  </p>
+  <nav class="nvgtn">
+    <h2 id="site-navigation">{{ 'main_navigation' | i18n }}</h2>
+    <ul class="nvgtn__list" aria-labelledby="site-navigation">
+      <li>
+        {{ 'photos' | i18n | link_to('/photos/') }}
+      </li>
+      <li>
+        {{ 'about'  | i18n | link_to('/about/') }}
+      </li>
+      <li>
+        {{ 'contact' | i18n | link_to('/contact/') }}
+      </li>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,26 @@
+{% extends "base.njk" %}
+
+{% block content %}
+    <h1>{{ 'projects' | i18n(language) }}</h1>
+    {% for project in collections.projects %}
+      <h2>
+        <a href="#{{ project.slug }}"><img src="/assets/icons/link.svg" alt="" aria-hidden="true"></a>
+        {{ project.nameKey | i18n | addId(project.slug) }}
+      </h2>
+      <ul class="photo-list" data-list-length="{{ collections.photos | projectfilter(project.key) | length }}">
+        {% for photo in collections.photos | projectfilter(project.key) %}
+            <li class="photo-list__item">
+              <figure class="photo-list__item-frame">
+                <figcaption class="photo-list__item-caption">
+                  {{ 'title' | getkey(photo.data.alternativeKey) | link_to(photo.data.alternativeKey) | addClass('photo-list__item-link') }}
+                  {{ 'date' | getkey(photo.data.alternativeKey) | humandate }}
+                </figcaption>
+                {% image photo.data.image, "", "100vw" %}
+              </figure>
+            </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+
+
+{% endblock %}

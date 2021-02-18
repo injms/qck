@@ -1,0 +1,52 @@
+{% extends "base.njk" %}
+
+{# This page's default language version `page` object #}
+{% set defaultPage = 'page' | getkey(alternativeKey, site.defaultLanguage) %}
+
+{% set thisProject = ['project__', projectKey] | join %}
+
+{% set previousPhoto = collections[thisProject] | getPreviousCollectionItem(defaultPage) %}
+{% set nextPhoto = collections[thisProject] | getNextCollectionItem(defaultPage) %}
+
+{% set exclusions = [
+  previousPhoto.data.alternativeKey,
+  alternativeKey,
+  nextPhoto.data.alternativeKey
+] %}
+{% set limit = 3 if (previousPhoto and nextPhoto) else 4 %}
+{% set randomCollection = collections[thisProject] | exclude(exclusions) | shuffle | limit_to(limit) %}
+
+{% block content %}
+  <main class="wrapper">
+    <section>
+      <h1>{{ title }}</h1>
+      {{ content | safe }}
+
+      {% image image, "alt", "100w" %}
+    </section>
+    <aside>
+      {% if previousPhoto %}
+        <div class="previous-photo">
+          {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | addClass('previous-link')  | addRel('previous')}}
+          {# {% 'image' | getkey(image previousPhoto.data.alternativeKey), "alt", "100vw" %} #}
+        </div>
+      {% endif %}
+
+      {% if randomCollection | length > 0 %}
+        {% for r in randomCollection %}
+          <div class="random-photos">
+            {{ r.data.alternativeKey | get('title') | link_to(r.data.alternativeKey) | addClass('random-link') }}
+            {# {% 'image' | getkey(image r.data.alternativeKey), "alt", "100vw" %} #}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if nextPhoto %}
+        <div class="next-photo">
+          {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | addClass('next-link') | addRel('next') }}
+          {# {% 'image' | getkey(image nextPhoto.data.alternativeKey), "alt", "100vw" %} #}
+        </div>
+      {% endif %}
+    </aside>
+  </main>
+{% endblock %}
