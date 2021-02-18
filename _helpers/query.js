@@ -3,8 +3,6 @@ const _ = {
   set: require('lodash/set'),
 }
 
-const site = require('../_data/site')
-
 /**
  * The query function allows us to ask a specific collection for certain pages
  * with specific paraameters returned in specific locales - for example, the
