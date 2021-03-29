@@ -29,6 +29,9 @@ const cleanKey = require('./_helpers/cleanKey')
 const get = require('./_helpers/get')
 const q = require('./_helpers/query')
 
+// Add an attribute to a DOM element.
+const addAttribute = require('./_helpers/addAttribute')
+
 // Given a width and a height, returns a name for the aspect ratio
 const aspectRatio = require('./_helpers/calculateAspectRatio')
 
@@ -276,57 +279,13 @@ const configuration = (eleventyConfig) => {
   })
 
   eleventyConfig.addFilter('addClass', function (element, className) {
-    if (typeof element === 'string') {
-      element = {
-        val: `<span>${element}</span>`,
-      }
-    }
-
-    const $ = cheerio(
-      element.val,
-      null,
-      false, // `false` parameter to stop this being wrapped in html and body tags.
-    )
-
-    const elementWithClass = $('*:first-child').addClass(className)
-
-    return markSafe(cheerioHTML(elementWithClass))
+    return addAttribute({ element, attribute: 'class', content: className })
   })
-
   eleventyConfig.addFilter('addRel', function (element, rel) {
-    if (typeof element === 'string') {
-      element = {
-        val: `<span>${element}</span>`,
-      }
-    }
-
-    const $ = cheerio(
-      element.val,
-      null,
-      false, // `false` parameter to stop this being wrapped in html and body tags.
-    )
-
-    const elementWithClass = $('*:first-child').attr('rel', rel)
-
-    return markSafe(cheerioHTML(elementWithClass))
+    return addAttribute({ element, attribute: 'rel', content: rel })
   })
-
   eleventyConfig.addFilter('addId', function (element, id) {
-    if (typeof element === 'string') {
-      element = {
-        val: `<span>${element}</span>`,
-      }
-    }
-
-    const $ = cheerio(
-      element.val,
-      null,
-      false, // `false` parameter to stop this being wrapped in html and body tags.
-    )
-
-    const elementWithClass = $('*:first-child').attr('id', id)
-
-    return markSafe(cheerioHTML(elementWithClass))
+    return addAttribute({ element, attribute: 'id', content: id })
   })
 
   eleventyConfig.addCollection('photos', function (collection) {
