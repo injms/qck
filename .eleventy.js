@@ -5,7 +5,7 @@ const {
 const _ = {
   cloneDeep: require('lodash/cloneDeep'),
 }
-const { load: cheerio, html: cheerioHTML } = require('cheerio')
+const { load: cheerio } = require('cheerio')
 const { format: prettier } = require('prettier')
 const {
   cssmin,
@@ -47,6 +47,9 @@ const configuration = (eleventyConfig) => {
 
   eleventyConfig.setLibrary('md', markdownify)
 
+  // eleventyConfig.addPassthroughCopy({ '_pages/**/*.jpg': 'assets/images/' })
+  eleventyConfig.addPassthroughCopy({ '_assets/': 'assets/' })
+
   eleventyConfig.addFilter('cssmin', (css) => cssmin(css))
   eleventyConfig.addFilter('debug', (thing) => debug(thing))
   eleventyConfig.addFilter('isodate', (datestring) => isodate(datestring))
@@ -82,6 +85,7 @@ const configuration = (eleventyConfig) => {
     return collection.slice(0, limit)
   })
 
+  // eg page.alternativeKey | get('title', 'en-gb')
   eleventyConfig.addFilter('get', function (key, parameter, locale) {
     const { value, fallback } = get.bind(this)({ key, parameter, locale })
 
@@ -90,6 +94,7 @@ const configuration = (eleventyConfig) => {
       : markSafe(`<span lang="${site.defaultLanguage}">${value}</span>`)
   })
 
+  // eg 'page' | getkey(alternativeKey, 'es')
   eleventyConfig.addFilter('getkey', function (parameter, key, locale) {
     if (!parameter) return 'Error - no parameter set'
 
@@ -321,8 +326,12 @@ const configuration = (eleventyConfig) => {
     return projectKeys
   })
 
-
-  eleventyConfig.addNunjucksAsyncShortcode('image', async function (filename, alt = '', sizes = '100w', outputFormat = ['jpeg']) {
+  eleventyConfig.addNunjucksAsyncShortcode('image', async function (
+    filename,
+    alt = '',
+    sizes = '100w',
+    outputFormat = ['jpeg'],
+  ) {
     const resizeTo = () => {
       if (site.production === false) {
         return [480, 1080]
