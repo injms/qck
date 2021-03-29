@@ -12,8 +12,8 @@ const {
   debug,
   humandate,
   isodate,
-  markdownify,
 } = require('@injms/quack-nunjucks-filters')
+const markdownify = require('./_filters/markdownify')
 const Image = require('@11ty/eleventy-img')
 
 // Allows a filter to not need the `safe` filter when returning HTML
