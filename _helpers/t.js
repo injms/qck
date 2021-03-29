@@ -9,7 +9,7 @@ const site = require('../_data/site')
 //   false }
 // * eg key not present: _t('hello', 'de') would give { text: 'Hello', fallback:
 //   true }
-const translate = (key, locale) => {
+const translate = (key, locale = site.defaultLanguage) => {
   const i18n = i18next.createInstance()
   let pseudo = !!site.pseudoLocalisation
 
