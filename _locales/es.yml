@@ -1,0 +1,14 @@
+es:
+  common:
+    locale: "Español"
+    about: "Sobre mí"
+    photos: "Galería de fotos"
+    contact: "Ponerse en contacto"
+    main_navigation: "Menú principal"
+    accessibility_statement: "Declaración de accesibilidad"
+    projects: "Grupos de fotos"
+  project:
+    arctic_terns: "charranes Árticos"
+  url:
+    projects: "en-grupo"
+    about: "sobre-mí"

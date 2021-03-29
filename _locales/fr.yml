@@ -1,0 +1,9 @@
+fr:
+  common:
+    locale: "Français"
+    photos: "Galerie de photos"
+    about: "À propos de moi"
+    contact: "Entrer en contact"
+    accessibility_statement: "Déclaration d'accessibilité"
+    rss_feed: "flux RSS"
+    json_feed: "flux JSON"

@@ -16,7 +16,7 @@
                   {{ 'date' | getkey(photo.data.alternativeKey) | humandate }}
                 </figcaption>
                 {% if photo.data.image %}
-                {% image photo.data.image, "", "100vw" %}
+                  {% image photo.data.image, "", "100vw" %}
                 {% endif %}
               </figure>
             </li>

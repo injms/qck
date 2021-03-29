@@ -4,7 +4,7 @@ en-gb:
     skip_to_content: "Skip to content"
     site_name: "Ian James Photography"
     site_default_description: "Ian's personal and professional photography portfolio."
-    main_navigation: "Main navigation"
+    main_navigation: "Main menu"
 
     photos: "Photos"
     about: "About"
@@ -24,6 +24,7 @@ en-gb:
   project:
     arctic_terns: "Arctic terns"
     puffins: "Puffins"
+    test_project: "Test"
 
   # The strings to use for URIs. The `url` namespace is the first place that
   # a key is looked up in, then it falls back to `common`. Both are slugified.
