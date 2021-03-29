@@ -34,7 +34,7 @@ module.exports = {
         return extname(filename) === '.jpg'
       })
 
-      return join(folder, file[0])
+      if (file.length >= 1) return join(folder, file[0])
     }
   },
   language: function ({ language }) {

@@ -15,7 +15,9 @@
                   {{ 'title' | getkey(photo.data.alternativeKey) | link_to(photo.data.alternativeKey) | addClass('photo-list__item-link') }}
                   {{ 'date' | getkey(photo.data.alternativeKey) | humandate }}
                 </figcaption>
+                {% if photo.data.image %}
                 {% image photo.data.image, "", "100vw" %}
+                {% endif %}
               </figure>
             </li>
         {% endfor %}

@@ -22,7 +22,9 @@
       <h1>{{ title }}</h1>
       {{ content | safe }}
 
+      {% if image %}
       {% image image, "alt", "100w" %}
+      {% endif %}
     </section>
     <aside>
       {% if previousPhoto %}
