@@ -3,18 +3,17 @@
 {# This page's default language version `page` object #}
 {% set defaultPage = 'page' | getkey(alternativeKey, site.defaultLanguage) %}
 
-{% set thisProject = ['project__', projectKey] | join %}
-
-{% set previousPhoto = collections[thisProject] | getPreviousCollectionItem(defaultPage) %}
-{% set nextPhoto = collections[thisProject] | getNextCollectionItem(defaultPage) %}
+{% set previousPhoto = collections['all'] | projectfilter(projectKey) | getPreviousCollectionItem(defaultPage) %}
+{% set nextPhoto = collections['all'] | projectfilter(projectKey) | getNextCollectionItem(defaultPage) %}
 
 {% set exclusions = [
   previousPhoto.data.alternativeKey,
   alternativeKey,
   nextPhoto.data.alternativeKey
 ] %}
+
 {% set limit = 3 if (previousPhoto and nextPhoto) else 4 %}
-{% set randomCollection = collections[thisProject] | exclude(exclusions) | shuffle | limit_to(limit) %}
+{% set randomCollection = collections['all'] | projectfilter(projectKey) | exclude(exclusions) | shuffle | limit_to(limit) %}
 
 {% block content %}
   <main class="wrapper">
@@ -23,7 +22,7 @@
       {{ content | safe }}
 
       {% if image %}
-      {% image image, "alt", "100w" %}
+        {% image image, "alt", "100w" %}
       {% endif %}
     </section>
     <aside>
