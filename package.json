@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^0.12.1",
-    "@11ty/eleventy-img": "^0.8.2",
+    "@11ty/eleventy-img": "^0.8.3",
     "@injms/quack-nunjucks-filters": "^0.12.0",
     "cheerio": "^1.0.0-rc.5",
     "i18next": "^20.1.0",
