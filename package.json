@@ -29,7 +29,7 @@
     "@11ty/eleventy-img": "^0.8.3",
     "@injms/quack-nunjucks-filters": "^0.12.0",
     "cheerio": "^1.0.0-rc.6",
-    "i18next": "^20.2.1",
+    "i18next": "^20.2.2",
     "lodash": "^4.17.21",
     "prettier": "^2.2.1",
     "yaml": "^1.10.2"
