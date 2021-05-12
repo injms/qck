@@ -31,7 +31,7 @@
     "cheerio": "^1.0.0-rc.9",
     "i18next": "^20.2.2",
     "lodash": "^4.17.21",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "yaml": "^1.10.2"
   },
   "devDependencies": {
