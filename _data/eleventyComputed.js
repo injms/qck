@@ -1,6 +1,6 @@
 const i18next = require('i18next')
 const exifr = require('exifr')
-const { dirname, extname, join } = require('path')
+const { basename, dirname, extname, join } = require('path')
 const { readdirSync } = require('fs')
 
 const cleanKey = require('../_helpers/cleanKey')
@@ -30,10 +30,16 @@ module.exports = {
     if (image) return image
 
     if (type === 'photo') {
+      const base = basename(page.inputPath, '.md')
       const folder = dirname(page.inputPath)
-      const file = readdirSync(folder).filter(filename => {
-        return extname(filename) === '.jpg'
-      })
+
+      const file = readdirSync(folder)
+        .filter(filename => {
+          return extname(filename) === '.jpg'
+        })
+        .filter(filename => {
+          return basename(filename, '.jpg') === base
+        })
 
       if (file.length >= 1) return join(folder, file[0])
     }
