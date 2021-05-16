@@ -112,9 +112,7 @@ module.exports = {
     return cleanKey(dirname(inputPath))
   },
   pageID: function ({ pageID, page: { inputPath } }) {
-    if (pageID) {
-      return pageID
-    }
+    if (pageID) return pageID
 
     return inputPath
   },
