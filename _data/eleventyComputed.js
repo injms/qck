@@ -106,14 +106,10 @@ module.exports = {
   //    ↳ about.pt-br.md
   //  → homepage/
   //    ↳ homepage.md
-  alternativeKey: function ({ alternativeKey, page }) {
-    if (alternativeKey) {
-      return alternativeKey
-    }
+  alternativeKey: function ({ alternativeKey, page: { inputPath } }) {
+    if (alternativeKey) return alternativeKey
 
-    const cleanedKey = cleanKey(dirname(page.inputPath))
-
-    return cleanedKey
+    return cleanKey(dirname(inputPath))
   },
   pageID: function ({ pageID, page: { inputPath } }) {
     if (pageID) {
