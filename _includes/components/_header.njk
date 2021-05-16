@@ -1,24 +1,16 @@
-<p>
-  <a href="#content" class="skip-to-content">
-    {{ 'skip_to_content' | i18n }}
-  </a>
-</p>
-
 <header class="hdr">
-  <p>
-    <a href="/" class="logo">
-      {{ 'site_name' | i18n }}
-    </a> -
-    {{ 'site_default_description' | i18n }}
-  </p>
+  {{ 'site_name' | i18n | link_to('/homepage/') | addClass('hdr__logo') }}
   <nav class="nvgtn">
-    <h2 id="site-navigation">{{ 'main_navigation' | i18n }}</h2>
-    <ul class="nvgtn__list" aria-labelledby="site-navigation">
-      <li>
-        {{ 'photos' | i18n | link_to('/photos/') }}
+    <h2 id="main-navigation" class="visually-hidden">{{ 'main_navigation' | i18n }}</h2>
+    <ul class="nvgtn__list" aria-labelledby="main-navigation" role="list">
+      <li class="nvgtn__list-item">
+        {{ 'photos' | i18n | link_to('/photos/') | addClass('nvgtn__link') }}
       </li>
-      <li>
-        {{ 'about'  | i18n | link_to('/about/') }}
+      <li class="nvgtn__list-item">
+        {{ 'about'  | i18n | link_to('/about/') | addClass('nvgtn__link') }}
+      </li>
+      <li class="nvgtn__list-item">
+        {{ 'contact'  | i18n | link_to('/contact/') | addClass('nvgtn__link') }}
       </li>
     </ul>
   </nav>
