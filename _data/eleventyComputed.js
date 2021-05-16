@@ -111,6 +111,34 @@ module.exports = {
 
     return cleanKey(dirname(inputPath))
   },
+  feedKey: function ({
+    feedKey,
+    page: {
+      inputPath,
+      filePathStem,
+    },
+  }) {
+    if (feedKey) return feedKey
+
+    const pageFolder = inputPath
+      .replace(filePathStem, '')
+      .replace(extname(inputPath), '')
+
+    // Feeds can require a unique ID for each page, usually based on the URL.
+    // This removes the trailing slashes, and replaces the middle slashes with
+    // colons.
+    // For example:
+    //    /one/two/three/four/ => one:two:three:four
+    //    /photos/beautiful-sunset/ => photos:beautiful-sunset
+    //    /about/ => about
+    const key = cleanKey(dirname(inputPath))
+      .replace(pageFolder, '')
+      .replace(/^\//, '')
+      .replace(/\/$/, '')
+      .replace(/\//, ':')
+
+    return key
+  },
   pageID: function ({ pageID, page: { inputPath } }) {
     if (pageID) return pageID
 
