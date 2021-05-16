@@ -12,6 +12,8 @@
 
     <meta name="rating" content="general">
     <meta name="format-detection" content="telephone=no">
+    <meta name="disabled-adaptations" content="watch">
+
     {% if site.themeColour %}
       <meta name="theme-color" content="{{ site.themeColour }}">
     {% endif %}
@@ -120,9 +122,14 @@
         <meta name="baidu-site-verification" content="{{ site.webmasterVerifications.baidu }}">
       {% endif %}
     {% endif %}
+
+    <link rel="stylesheet" href="/assets/stylesheets/base.css">
+    <link rel="stylesheet" href="/assets/stylesheets/_skip-to-content.css">
   </head>
 
   <body>
+    {% include "components/_skip-to-content.njk" %}
+    <link rel="stylesheet" href="/assets/stylesheets/_header.css">
     {% include "components/_header.njk" %}
 
     {% if alternatives | length !== 0 %}
@@ -146,11 +153,22 @@
       </main>
     {% endblock %}
 
-    <footer class="ftr">
-      <h2>{{ 'legal_footer' | i18n }}</h2>
-      <ul>
-        <li>{{ 'cookie_and_privacy_policy' | i18n | link_to('/cookie-and-privacy-policy/') }}</li>
-      </ul>
+
+    <link rel="stylesheet" href="/assets/stylesheets/_footer.css">
+    <footer class="ftr" id="footer">
+      <h2 class="visually-hidden">{{ 'copyright_heading' | i18n }}</h2>
+      <p class="ftr__copyright-notice">
+        {{ 'copyright' | i18n | safe }}
+      </p>
+
+      <h2 class="visually-hidden">{{ 'colophon' | i18n }}</h2>
+      <p class="powered_by">
+        <a class="powered_by__link" href="https://beautifol.io">
+          Powered<br>by<br>Beautifol.io
+        </a>
+      </p>
     </footer>
+
+    <p class="commit-reference">{{ site.commitRef }}</p>
   </body>
 </html>

@@ -1,0 +1,28 @@
+.skip-to-content {
+  border-radius: 0.5em;
+  clip-path: inset(50%);
+  clip: rect(0 0 0 0);
+  display: block;
+  font-size: 0.9em;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.skip-to-content:focus {
+  -webkit-clip-path: none;
+  clip-path: none;
+  clip: auto;
+  height: auto;
+  margin: 0.75em 0.5em;
+  overflow: visible;
+  padding: 1em;
+  position: static;
+  white-space: inherit;
+  width: auto;
+}
