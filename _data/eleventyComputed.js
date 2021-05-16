@@ -1,4 +1,5 @@
 const i18next = require('i18next')
+const exifr = require('exifr')
 const { dirname, extname, join } = require('path')
 const { readdirSync } = require('fs')
 
@@ -35,6 +36,23 @@ module.exports = {
       })
 
       if (file.length >= 1) return join(folder, file[0])
+    }
+  },
+  imageMetadata: async function ({ imageMetadata, type, image }) {
+    if (imageMetadata) return imageMetadata
+
+    if (type === 'photo' && image !== '' && image !== undefined) {
+      const metadata = await exifr.parse(image)
+
+      metadata.Model = metadata.Model.replace(/DIGITAL/, '').trim()
+
+      metadata.LensModel = metadata.LensModel
+        .replace(/\.0/g, '') // Remove trailing decimals: `200.0` to `200`
+        .replace(/\smm/, 'mm') // Remove space between number and `mm`
+        .replace(/-/g, '&mdash;') // Replace hypher with mdash.
+        .trim()
+
+      return metadata
     }
   },
   language: function ({ language }) {
