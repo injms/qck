@@ -6,7 +6,9 @@
   "scripts": {
     "build": "npm run build:site",
     "build:site": "eleventy",
-    "test": "node __spec__/index.spec.js",
+    "build:l10n": "PSEUDOL10N=true npm run watch:site",
+    "test": "rm -r site && ELEVENTY_PLACEHOLDER=true npm run build && npm run test:l10n",
+    "test:l10n": "node __spec__/localisation.spec.js",
     "watch:site": "eleventy --serve",
     "lint": "npm run lint:javascript",
     "lint:javascript": "eslint --config='.eslintrc.yaml' '**/*.js'"
