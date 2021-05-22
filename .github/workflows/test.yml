@@ -4,7 +4,7 @@ on:
  - push
 
 jobs:
-  check-that-it-builds:
+  localisation-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.3.4
@@ -20,5 +20,5 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: ${{ runner.os }}-node-
     - run: npm ci
-    - run: npm run build
-    - run: npm test
+    - run: ELEVENTY_PLACEHOLDER=true npm run build # Build using placeholder content
+    - run: npm run test:runner # Run test set for running in this workflow

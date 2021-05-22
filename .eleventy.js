@@ -399,7 +399,7 @@ const configuration = (eleventyConfig) => {
   return {
     dir: {
       data: '../_data',
-      input: '_pages-placeholder',
+      input: process.env.ELEVENTY_PLACEHOLDER === 'true' ? '_pages-placeholder' : '_pages',
       includes: '../_includes',
       layouts: '../_layouts',
       output: 'site',
