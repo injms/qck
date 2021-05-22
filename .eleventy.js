@@ -6,7 +6,6 @@ const _ = {
   cloneDeep: require('lodash/cloneDeep'),
 }
 const { load: cheerio } = require('cheerio')
-const { format: prettier } = require('prettier')
 const {
   cssmin,
   debug,
@@ -384,16 +383,6 @@ const configuration = (eleventyConfig) => {
     }
 
     return Image.generateHTML(imageMetadata, imageAttributes)
-  })
-
-  // Prettifys HTML
-  eleventyConfig.addTransform('html', (content, outputPath) => {
-    if (outputPath.endsWith('.html')) {
-      return prettier(content, {
-        parser: 'html',
-      })
-    }
-    return content
   })
 
   return {
