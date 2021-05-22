@@ -37,7 +37,6 @@
     "exifr": "^7.0.0",
     "i18next": "^20.3.0",
     "lodash": "^4.17.21",
-    "prettier": "^2.3.0",
     "yaml": "^1.10.2"
   },
   "devDependencies": {
