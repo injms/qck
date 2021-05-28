@@ -1,4 +1,5 @@
 const getTranslations = require('../_helpers/getTranslations')
+const { join } = require('path')
 
 // All the default data and settings. Default strings go into the i18n files.
 const site = {
@@ -30,13 +31,18 @@ const site = {
   },
 }
 
+const localisationFolder = join(
+  process.env.ELEVENTY_PLACEHOLDER === 'true' ? '_pages-placeholder' : '_pages',
+  '_locales',
+)
+
 site.i18n = {
   debug: false,
   fallbackLng: site.defaultLanguage,
   lowerCaseLng: true,
   ns: ['common', 'url', 'project'],
   defaultNS: 'common',
-  resources: getTranslations('_locales'),
+  resources: getTranslations(localisationFolder),
 }
 
 module.exports = site

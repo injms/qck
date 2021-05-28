@@ -18,3 +18,5 @@ site
 .stylelintcache
 
 **/*readme.*
+
+_pages/_locales/
