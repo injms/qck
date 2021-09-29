@@ -35,7 +35,7 @@
     "@injms/quack-nunjucks-filters": "^0.12.1",
     "cheerio": "^1.0.0-rc.10",
     "exifr": "^7.1.3",
-    "i18next": "^21.1.0",
+    "i18next": "^21.1.1",
     "lodash": "^4.17.21",
     "yaml": "^1.10.2"
   },
