@@ -7,7 +7,11 @@ const site = {
   defaultLanguage: 'en-gb',
   production: process.env.CONTEXT === 'production',
   pseudoLocalisation: process.env.PSEUDOL10N === 'true',
-  baseURL: process.env.CONTEXT === 'production' ? process.env.URL : process.env.DEPLOY_PRIME_URL,
+  baseURL: (function () {
+    if (process.env.CONTEXT === 'production') return process.env.URL
+    if (process.env.DEPLOY_PRIME_URL) return process.env.DEPLOY_PRIME_URL
+    return 'http://localhost:8080'
+  })(),
   themeColour: '#f0f0f0',
   rel: {
     me: [
