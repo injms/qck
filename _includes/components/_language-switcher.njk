@@ -1,0 +1,15 @@
+{% if alternatives | length !== 0 %}
+  <h2>{{ 'read_this_page_in_different_language' | i18n }}</h2>
+  <ul>
+    {% for alternative in alternatives %}
+      <li>
+        <a rel="alternate"
+          href="{{ site.baseURL }}{{ alternative.url }}"
+          hreflang="{{ alternative.language }}"
+          lang="{{ alternative.language }}">
+          {{ alternative.languageName }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

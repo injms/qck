@@ -1,5 +1,4 @@
 {% set metadataDescription = metadata.description if metadata.description else 'site_default_description' | i18nbare(language) %}
-
 <!DOCTYPE html>
 <html lang="{{ language }}" dir="{{ direction }}">
   <head>
@@ -122,29 +121,13 @@
         <meta name="baidu-site-verification" content="{{ site.webmasterVerifications.baidu }}">
       {% endif %}
     {% endif %}
-
     <link rel="stylesheet" href="/assets/stylesheets/base.css">
-    <link rel="stylesheet" href="/assets/stylesheets/_skip-to-content.css">
   </head>
 
   <body>
     {% include "components/_skip-to-content.njk" %}
-    <link rel="stylesheet" href="/assets/stylesheets/_header.css">
     {% include "components/_header.njk" %}
-
-    {% if alternatives | length !== 0 %}
-      <h2>{{ 'read_this_page_in_different_language' | i18n }}</h2>
-      <ul>
-        {% for alternative in alternatives %}
-          <a rel="alternate"
-            href="{{ site.baseURL }}{{ alternative.url }}"
-            hreflang="{{ alternative.language }}"
-            lang="{{ alternative.language }}">
-            {{ alternative.languageName }}
-          </a>
-        {% endfor %}
-      </ul>
-    {% endif %}
+    {% include "components/_language-switcher.njk" %}
 
     {% block content %}
       <main class="wrapper" id="content">
@@ -153,21 +136,7 @@
       </main>
     {% endblock %}
 
-
-    <link rel="stylesheet" href="/assets/stylesheets/_footer.css">
-    <footer class="ftr" id="footer">
-      <h2 class="visually-hidden">{{ 'copyright_heading' | i18n }}</h2>
-      <p class="ftr__copyright-notice">
-        {{ 'copyright' | i18n | safe }}
-      </p>
-
-      <h2 class="visually-hidden">{{ 'colophon' | i18n }}</h2>
-      <p class="powered_by">
-        <a class="powered_by__link" href="https://beautifol.io">
-          Powered<br>by<br>Beautifol.io
-        </a>
-      </p>
-    </footer>
+    {% include "components/_footer.njk" %}
 
     <p class="commit-reference">{{ site.commitRef }}</p>
   </body>
