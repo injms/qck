@@ -36,37 +36,39 @@ const markdownLinkI18n = function (md) {
           return false
         })
 
-        if (key === '/') key = '/homepage/'
+        if (key.startsWith('/')) {
+          if (key === '/') key = '/homepage/'
 
-        key = cleanKey(key)
+          key = cleanKey(key)
 
-        const pageFolder = env.page.inputPath
-          .replace(env.page.filePathStem, '')
-          .replace(extname(env.page.inputPath), '')
+          const pageFolder = env.page.inputPath
+            .replace(env.page.filePathStem, '')
+            .replace(extname(env.page.inputPath), '')
 
-        if (key.startsWith(pageFolder) === false) {
-          key = pageFolder + key
-        }
+          if (key.startsWith(pageFolder) === false) {
+            key = pageFolder + key
+          }
 
-        const [thisLang] = q.bind(env.collections.all)({
-          select: [
-            'data.page.url',
-            'data.language',
-          ],
-          where: [
-            `data.alternativeKey = ${key}`,
-            `data.language = ${env.language}`,
-          ],
-        })
+          const [thisLang] = q.bind(env.collections.all)({
+            select: [
+              'data.page.url',
+              'data.language',
+            ],
+            where: [
+              `data.alternativeKey = ${key}`,
+              `data.language = ${env.language}`,
+            ],
+          })
 
-        const languageOfPageBeingLinkeTo = thisLang ? thisLang.data.language : env.site.defaultLanguage
+          const languageOfPageBeingLinkeTo = thisLang ? thisLang.data.language : env.site.defaultLanguage
 
-        // Update the href attribute's contents:
-        token.attrs[hrefPosition][1] = `/${languageOfPageBeingLinkeTo}${token.attrs[hrefPosition][1]}`
+          // Update the href attribute's contents:
+          token.attrs[hrefPosition][1] = `/${languageOfPageBeingLinkeTo}${token.attrs[hrefPosition][1]}`
 
-        // Only add the `hreflang` attribute when it's needed:
-        if (env.language !== languageOfPageBeingLinkeTo) {
-          token.attrs.push(['hreflang', languageOfPageBeingLinkeTo])
+          // Only add the `hreflang` attribute when it's needed:
+          if (env.language !== languageOfPageBeingLinkeTo) {
+            token.attrs.push(['hreflang', languageOfPageBeingLinkeTo])
+          }
         }
       }
     })
