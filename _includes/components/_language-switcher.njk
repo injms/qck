@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="/assets/stylesheets/_language-switcher.css">
+<div class="language-switcher">
+  {% if alternatives | length !== 0 %}
+    <h2 class="language-switcher__heading">{{ 'read_this_page_in_different_language' | i18n }}</h2>
+    <ul class="language-switcher__list-of-languages">
+      {% for alternative in alternatives %}
+        <li class="language-switcher__language-item">
+          <a rel="alternate"
+            class="language-switcher__language-link"
+            href="{{ site.baseURL }}{{ alternative.url }}"
+            hreflang="{{ alternative.language }}"
+            lang="{{ alternative.language }}">
+            {{ alternative.languageName }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

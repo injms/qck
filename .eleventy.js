@@ -48,6 +48,7 @@ const configuration = (eleventyConfig) => {
 
   // eleventyConfig.addPassthroughCopy({ '_pages/**/*.jpg': 'assets/images/' })
   eleventyConfig.addPassthroughCopy({ '_assets/': 'assets/' })
+  eleventyConfig.addPassthroughCopy({ '_includes/**/*.css': 'assets/stylesheets/' })
 
   eleventyConfig.addFilter('cssmin', (css) => cssmin(css))
   eleventyConfig.addFilter('debug', (thing) => debug(thing))
