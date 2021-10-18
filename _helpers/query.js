@@ -22,7 +22,7 @@ const _ = {
  */
 const q = function ({
   select = '*',
-  where,
+  where, // for example "language = en-gb"
   orderBy = 'date desc',
   limit,
 } = {
@@ -66,7 +66,10 @@ const q = function ({
     .filter((page) => {
       if (!where) return page
 
-      const a = where.map(condition => {
+      const conditionResult = where.map(condition => {
+        // Expects a space between parmater, operator, and key. For example:
+        //  * "language = en-gb"
+        //  * "date >= 2020/12/31"
         const [parameter, operator, key] = condition.split(' ')
 
         const requestedParameter = _.get(page, parameter)
@@ -89,8 +92,8 @@ const q = function ({
       })
 
       // Only all true should return true (eg [true, true, true])
-      // Presence of >= one false should give false.w
-      return !a.includes(false)
+      // Presence of >= one false should give false.
+      return !conditionResult.includes(false)
     })
     .map((page) => {
       if (select.includes('*')) return page
