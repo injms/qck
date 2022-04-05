@@ -8,7 +8,7 @@
     "build:site": "eleventy",
     "build:l10n": "PSEUDOL10N=true npm run watch:site",
     "test": "npm run test:local",
-    "test:local": "rm -r site && ELEVENTY_PLACEHOLDER=true npm run build && npm run test:l10n",
+    "test:local": "rm -r site && ELEVENTY_PLACEHOLDER=true npm run build && ELEVENTY_PLACEHOLDER=true npm run test:l10n",
     "test:runner": "npm run test:l10n",
     "test:l10n": "node __spec__/localisation.spec.js",
     "watch": "npm run watch:site",

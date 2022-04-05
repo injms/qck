@@ -11,6 +11,8 @@ const {
   log,
 } = console
 
+const site = require('../_data/site')
+
 const checkFolderStructure = () => {
   const expected = {
     directories: [
@@ -69,9 +71,9 @@ const checkRelAlternate = () => {
       'fr/a-propos-de-moi/index.html',
     ],
     href: [
-      '/en-gb/about/',
-      '/es/sobre-mi/',
-      '/fr/a-propos-de-moi/',
+      `${site.baseURL}/en-gb/about/`,
+      `${site.baseURL}/es/sobre-mi/`,
+      `${site.baseURL}/fr/a-propos-de-moi/`,
     ],
   }
 
