@@ -2,9 +2,7 @@ const {
   extname,
   basename,
 } = require('path')
-const _ = {
-  cloneDeep: require('lodash/cloneDeep'),
-}
+
 const { load: cheerio } = require('cheerio')
 const {
   cssmin,
@@ -13,6 +11,11 @@ const {
   isodate,
 } = require('@injms/quack-nunjucks-filters')
 const markdownify = require('./_filters/markdownify')
+
+const shuffle = require('./_filters/collection/shuffle')
+const exclude = require('./_filters/collection/exclude')
+const limitTo = require('./_filters/collection/limit-to')
+
 const Image = require('@11ty/eleventy-img')
 
 // Allows a filter to not need the `safe` filter when returning HTML
@@ -53,37 +56,15 @@ const configuration = (eleventyConfig) => {
   eleventyConfig.addFilter('cssmin', (css) => cssmin(css))
   eleventyConfig.addFilter('debug', (thing) => debug(thing))
   eleventyConfig.addFilter('isodate', (datestring) => isodate(datestring))
-  eleventyConfig.addFilter('markdownify', (markdown) =>
-    markdownify.render(markdown),
-  )
+  eleventyConfig.addFilter('markdownify', (markdown) => markdownify.render(markdown))
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
     const setLocale = locale || this.ctx.language
     return humandate(datestring, setLocale)
   })
 
-  eleventyConfig.addFilter('shuffle', function (collection) {
-    const clonedCollection = _.cloneDeep(collection)
-
-    for (let idx = clonedCollection.length - 1; idx > 0; idx--) {
-      const jdx = Math.floor(Math.random() * (idx + 1))
-      ;[clonedCollection[idx], clonedCollection[jdx]] = [clonedCollection[jdx], clonedCollection[idx]]
-    }
-
-    return clonedCollection
-  })
-
-  eleventyConfig.addFilter('exclude', function (collection, exclusions = []) {
-    if (typeof exclusions === 'string') {
-      exclusions = [exclusions]
-    }
-
-    return collection
-      .filter(({ data: { alternativeKey } }) => !exclusions.includes(alternativeKey))
-  })
-
-  eleventyConfig.addFilter('limit_to', function (collection, limit = 3) {
-    return collection.slice(0, limit)
-  })
+  eleventyConfig.addFilter('shuffle', (collection) => shuffle(collection))
+  eleventyConfig.addFilter('exclude', (collection, exclusions = []) => exclude(collection, exclusions))
+  eleventyConfig.addFilter('limit_to', (collection, limit = 3) => limitTo(collection, limit))
 
   // eg page.alternativeKey | get('title', 'en-gb')
   eleventyConfig.addFilter('get', function (key, parameter, locale) {
