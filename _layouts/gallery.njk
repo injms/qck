@@ -12,8 +12,7 @@
             <li class="photo-list__item">
               <figure class="photo-list__item-frame">
                 <figcaption class="photo-list__item-caption">
-                  {{ 'title' | getkey(photo.data.alternativeKey) | link_to(photo.data.alternativeKey) | addClass('photo-list__item-link') }}
-                  {{ 'date' | getkey(photo.data.alternativeKey) | humandate }}
+                  {{ 'title' | getkey(photo.data.alternativeKey) | link_to(photo.data.alternativeKey) | add_class('photo-list__item-link') }}
                 </figcaption>
                 {% if photo.data.image %}
                   {% image photo.data.image, "", "100vw" %}

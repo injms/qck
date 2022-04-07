@@ -1,17 +1,17 @@
 <link rel="stylesheet" href="/assets/stylesheets/_header.css">
 <header class="hdr">
-  {{ 'site_name' | i18n | link_to('/homepage/') | addClass('hdr__logo') }}
+  {{ 'site_name' | i18n | link_to('/homepage/') | add_class('hdr__logo') }}
   <nav class="nvgtn">
     <h2 id="main-navigation" class="visually-hidden">{{ 'main_navigation' | i18n }}</h2>
     <ul class="nvgtn__list" aria-labelledby="main-navigation" role="list">
       <li class="nvgtn__list-item">
-        {{ 'photos' | i18n | link_to('/photos/') | addClass('nvgtn__link') }}
+        {{ 'photos' | i18n | link_to('/photos/') | add_class('nvgtn__link nvgtn__link--photos') }}
       </li>
       <li class="nvgtn__list-item">
-        {{ 'about'  | i18n | link_to('/about/') | addClass('nvgtn__link') }}
+        {{ 'about'  | i18n | link_to('/about/') | add_class('nvgtn__link nvgtn__link--about') }}
       </li>
       <li class="nvgtn__list-item">
-        {{ 'contact'  | i18n | link_to('/contact/') | addClass('nvgtn__link') }}
+        {{ 'contact'  | i18n | link_to('/contact/') | add_class('nvgtn__link nvgtn__link--contact') }}
       </li>
     </ul>
   </nav>

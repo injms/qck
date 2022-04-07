@@ -264,7 +264,7 @@ const configuration = (eleventyConfig) => {
     return _t(`url:${key}`, locale).text
   })
 
-  eleventyConfig.addFilter('addClass', function (element, className) {
+  eleventyConfig.addFilter('add_class', function (element, className) {
     return addAttribute({ element, attribute: 'class', content: className })
   })
   eleventyConfig.addFilter('addRel', function (element, rel) {

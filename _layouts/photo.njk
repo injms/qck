@@ -28,7 +28,7 @@
     <aside>
       {% if previousPhoto %}
         <div class="previous-photo">
-          {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | addClass('previous-link')  | addRel('previous')}}
+          {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | add_class('previous-link')  | addRel('previous')}}
           {# {% 'image' | getkey(image previousPhoto.data.alternativeKey), "alt", "100vw" %} #}
         </div>
       {% endif %}
@@ -36,7 +36,7 @@
       {% if randomCollection | length > 0 %}
         {% for r in randomCollection %}
           <div class="random-photos">
-            {{ r.data.alternativeKey | get('title') | link_to(r.data.alternativeKey) | addClass('random-link') }}
+            {{ r.data.alternativeKey | get('title') | link_to(r.data.alternativeKey) | add_class('random-link') }}
             {# {% 'image' | getkey(image r.data.alternativeKey), "alt", "100vw" %} #}
           </div>
         {% endfor %}
@@ -44,7 +44,7 @@
 
       {% if nextPhoto %}
         <div class="next-photo">
-          {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | addClass('next-link') | addRel('next') }}
+          {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | add_class('next-link') | addRel('next') }}
           {# {% 'image' | getkey(image nextPhoto.data.alternativeKey), "alt", "100vw" %} #}
         </div>
       {% endif %}
