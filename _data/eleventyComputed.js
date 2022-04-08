@@ -111,13 +111,7 @@ module.exports = {
 
     return cleanKey(dirname(inputPath))
   },
-  feedKey: function ({
-    feedKey,
-    page: {
-      inputPath,
-      filePathStem,
-    },
-  }) {
+  feedKey: function ({ feedKey, page: { inputPath, filePathStem } }) {
     if (feedKey) return feedKey
 
     const pageFolder = inputPath

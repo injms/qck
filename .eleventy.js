@@ -52,6 +52,7 @@ const configuration = (eleventyConfig) => {
   // eleventyConfig.addPassthroughCopy({ '_pages/**/*.jpg': 'assets/images/' })
   eleventyConfig.addPassthroughCopy({ '_assets/': 'assets/' })
   eleventyConfig.addPassthroughCopy({ '_includes/**/*.css': 'assets/stylesheets/' })
+  eleventyConfig.addPassthroughCopy({ '_layouts/**/*.css': 'assets/stylesheets/' })
 
   eleventyConfig.addFilter('cssmin', (css) => cssmin(css))
   eleventyConfig.addFilter('debug', (thing) => debug(thing))
@@ -119,42 +120,40 @@ const configuration = (eleventyConfig) => {
   )
 
   // Returns only the URI to the page - useful for things in the head.
-  eleventyConfig.addFilter('href_to',
-    function (key, language) {
-      const thisLanguage = (language || this.ctx?.language) || site.defaultLanguage
+  eleventyConfig.addFilter('href_to', function (key, language) {
+    const thisLanguage = (language || this.ctx?.language) || site.defaultLanguage
 
-      // Find alternative for this key in another language; and return only the
-      // things that we need to link to the alternative page.
-      const alternatives = q.bind(this.ctx.collections.all)({
-        select: [
-          'data.page.url',
-          'data.language',
-        ],
-        where: [
-          `data.alternativeKey = ${cleanKey(key)}`,
-        ],
-      })
-        .map(({ data: { page: { url }, language } }) => {
-          return {
-            url,
-            language,
-          }
-        })
-
-      // Check if there's a URL for the language we need the page in.
-      const existsInLocale = alternatives
-        .map(({ language }) => language)
-        .includes(thisLanguage)
-
-      const linkAvailableIn = existsInLocale ? thisLanguage : site.defaultLanguage
-
-      const r = alternatives
-        .filter((alternative) => alternative.language === linkAvailableIn)
-        .map(({ url }) => url)
-
-      // console.log(r, thisLanguage)
-      return r
+    // Find alternative for this key in another language; and return only the
+    // things that we need to link to the alternative page.
+    const alternatives = q.bind(this.ctx.collections.all)({
+      select: [
+        'data.page.url',
+        'data.language',
+      ],
+      where: [
+        `data.alternativeKey = ${cleanKey(key)}`,
+      ],
     })
+      .map(({ data: { page: { url }, language } }) => {
+        return {
+          url,
+          language,
+        }
+      })
+
+    // Check if there's a URL for the language we need the page in.
+    const existsInLocale = alternatives
+      .map(({ language }) => language)
+      .includes(thisLanguage)
+
+    const linkAvailableIn = existsInLocale ? thisLanguage : site.defaultLanguage
+
+    const r = alternatives
+      .filter((alternative) => alternative.language === linkAvailableIn)
+      .map(({ url }) => url)
+
+    return r
+  })
 
   eleventyConfig.addFilter('projectfilter', function (collection, filter) {
     if (!filter) return collection
@@ -311,6 +310,7 @@ const configuration = (eleventyConfig) => {
     filename,
     alt = '',
     sizes = '100w',
+    extraClasses,
     outputFormat = ['jpeg'],
   ) {
     const resizeTo = () => {
@@ -353,12 +353,25 @@ const configuration = (eleventyConfig) => {
 
     const imageSrc = imageMetadata[outputFormat[0]][0]
 
-    const imageAttributes = {
-      alt,
-      class: `responsive-image responsive-image--${aspectRatio({
+    const classes = [
+      extraClasses,
+      'responsive-image',
+    ]
+
+    classes.push(
+      `responsive-image--${aspectRatio({
         width: imageSrc.width,
         height: imageSrc.height,
       })}`,
+    )
+
+    const imageAttributes = {
+      alt,
+      // class: `responsive-image responsive-image--${aspectRatio({
+      //   width: imageSrc.width,
+      //   height: imageSrc.height,
+      // })}`,
+      class: classes.filter(item => !!item).join(' '),
       decoding: 'async',
       loading: 'lazy',
       sizes,
