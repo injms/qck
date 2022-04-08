@@ -75,8 +75,8 @@ const configuration = (eleventyConfig) => {
       : markSafe(`<span lang="${site.defaultLanguage}">${value}</span>`)
   })
 
-  // eg 'page' | getkey(alternativeKey, 'es')
-  eleventyConfig.addFilter('getkey', function (parameter, key, locale) {
+  // eg page.alternativeKey | get_bare('title', 'es')
+  eleventyConfig.addFilter('get_bare', function (key, parameter, locale) {
     if (!parameter) return 'Error - no parameter set'
 
     const { value } = get.bind(this)({ key, parameter, locale })

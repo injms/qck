@@ -1,7 +1,7 @@
 {% extends "base.njk" %}
 
 {# This page's default language version `page` object #}
-{% set defaultPage = 'page' | getkey(alternativeKey, site.defaultLanguage) %}
+{% set defaultPage = alternativeKey | get_bare('page', site.defaultLanguage) %}
 
 {% set previousPhoto = collections['all'] | projectfilter(projectKey) | getPreviousCollectionItem(defaultPage) %}
 {% set nextPhoto = collections['all'] | projectfilter(projectKey) | getNextCollectionItem(defaultPage) %}
@@ -29,7 +29,7 @@
       {% if previousPhoto %}
         <div class="previous-photo">
           {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | add_class('previous-link')  | addRel('previous')}}
-          {# {% 'image' | getkey(image previousPhoto.data.alternativeKey), "alt", "100vw" %} #}
+          {# {% image previousPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
         </div>
       {% endif %}
 
@@ -37,7 +37,7 @@
         {% for r in randomCollection %}
           <div class="random-photos">
             {{ r.data.alternativeKey | get('title') | link_to(r.data.alternativeKey) | add_class('random-link') }}
-            {# {% 'image' | getkey(image r.data.alternativeKey), "alt", "100vw" %} #}
+            {# {% image r.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
           </div>
         {% endfor %}
       {% endif %}
@@ -45,7 +45,7 @@
       {% if nextPhoto %}
         <div class="next-photo">
           {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | add_class('next-link') | addRel('next') }}
-          {# {% 'image' | getkey(image nextPhoto.data.alternativeKey), "alt", "100vw" %} #}
+          {# {% image nextPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
         </div>
       {% endif %}
     </aside>
