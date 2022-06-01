@@ -321,10 +321,6 @@ const configuration = (eleventyConfig) => {
     outputFormat = ['jpeg'],
   ) {
     const resizeTo = () => {
-      if (site.production === false) {
-        return [480, 1080]
-      }
-
       const minimum = 240
       const maximum = 1080
       const interval = 40
