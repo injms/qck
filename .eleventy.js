@@ -161,6 +161,12 @@ const configuration = (eleventyConfig) => {
     return q.bind(collection)({ where: `data.projectKey = ${filter}` })
   })
 
+  eleventyConfig.addFilter('only_include', function (collection, parameter, condition) {
+    if (!parameter || !condition) return collection
+
+    return q.bind(collection)({ where: `data.${parameter} = ${condition}` })
+  })
+
   // Links to a page in the current page's locale if available; if not, falls
   // back to linking to the default language.
   eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
