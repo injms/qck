@@ -322,7 +322,7 @@ const configuration = (eleventyConfig) => {
   ) {
     const resizeTo = () => {
       const minimum = 240
-      const maximum = 1080
+      const maximum = 1280
       const interval = 40
 
       const sizes = [minimum]
