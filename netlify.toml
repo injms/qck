@@ -1,0 +1,28 @@
+[build]
+publish = "site"
+command = "eleventy"
+
+[dev]
+framework = "#custom"
+command = "eleventy --serve"
+targetPort = 8_080
+
+[functions]
+directory = "_functions"
+
+[[redirects]]
+from = "/"
+to = "/en-gb/"
+status = 301
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+Content-Security-Policy = "default-src 'self' ; script-src 'self' ; style-src 'self' ; img-src 'self' ; upgrade-insecure-requests; block-all-mixed-content; report-uri https://injms.report-uri.com/r/d/csp/enforce"
+Expect-CT = "max-age=0, report-uri='https://injms.report-uri.com/r/d/ct/reportOnly'"
+Referrer-Policy = "strict-origin-when-cross-origin"
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+Permissions-Policy = "interest-cohort=()"
