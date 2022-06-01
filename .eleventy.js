@@ -317,15 +317,12 @@ const configuration = (eleventyConfig) => {
     alt = '',
     sizes = '100w',
     extraClasses,
+    responsive = true,
     outputFormat = ['jpeg'],
   ) {
     const resizeTo = () => {
-      if (site.production === false) {
-        return [480, 1080]
-      }
-
       const minimum = 240
-      const maximum = 1080
+      const maximum = 1280
       const interval = 40
 
       const sizes = [minimum]
@@ -361,22 +358,21 @@ const configuration = (eleventyConfig) => {
 
     const classes = [
       extraClasses,
-      'responsive-image',
     ]
 
-    classes.push(
-      `responsive-image--${aspectRatio({
-        width: imageSrc.width,
-        height: imageSrc.height,
-      })}`,
-    )
+    if (responsive) {
+      classes.push('responsive-image')
+
+      classes.push(
+        `responsive-image--${aspectRatio({
+          width: imageSrc.width,
+          height: imageSrc.height,
+        })}`,
+      )
+    }
 
     const imageAttributes = {
       alt,
-      // class: `responsive-image responsive-image--${aspectRatio({
-      //   width: imageSrc.width,
-      //   height: imageSrc.height,
-      // })}`,
       class: classes.filter(item => !!item).join(' '),
       decoding: 'async',
       loading: 'lazy',

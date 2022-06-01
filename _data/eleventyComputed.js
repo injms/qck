@@ -1,9 +1,12 @@
-const i18next = require('i18next')
 const exifr = require('exifr')
+const i18next = require('i18next')
+const Jimp = require('jimp')
+
 const { basename, dirname, extname, join } = require('path')
 const { readdirSync } = require('fs')
 
 const cleanKey = require('../_helpers/cleanKey')
+const aspectRatio = require('../_helpers/calculateAspectRatio')
 
 const site = require('./site')
 
@@ -49,6 +52,11 @@ module.exports = {
 
     if (type === 'photo' && image !== '' && image !== undefined) {
       const metadata = await exifr.parse(image)
+      const thumbnail = await exifr.thumbnail(image)
+
+      const img = await Jimp.read(thumbnail)
+
+      const { width, height } = img.bitmap
 
       metadata.Model = metadata.Model.replace(/DIGITAL/, '').trim()
 
@@ -57,6 +65,16 @@ module.exports = {
         .replace(/\smm/, 'mm') // Remove space between number and `mm`
         .replace(/-/g, '&mdash;') // Replace hypher with mdash.
         .trim()
+
+      metadata.aspectRatio = aspectRatio({
+        width,
+        height,
+      })
+
+      metadata.thumbnail = await img
+        .clone()
+        .scaleToFit(20, 20)
+        .getBase64Async(Jimp.MIME_JPEG)
 
       return metadata
     }
