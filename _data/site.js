@@ -12,7 +12,9 @@ const site = {
     if (process.env.DEPLOY_PRIME_URL) return process.env.DEPLOY_PRIME_URL
     return 'http://localhost:8080'
   })(),
-  themeColour: '#f0f0f0',
+  themeColour: {
+    light: 'rgba(245, 246, 250, 1)',
+  },
   rel: {
     me: [
       'https://www.ianjamesphotograpy.com',

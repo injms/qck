@@ -1,10 +1,38 @@
 :root {
-  --black: #010201;
-  --brilliantwhite: #ffffff;
-  --white: #f0f0f0;
-  --blue: #4834d4;
-  --green: #badc58;
-  --orange: #f0932b;
+  /*
+    Colours from Flat UI Aussie Paletter by Kate Hoolahan
+    https://flatuicolors.com/palette/au
+  */
+  --beekeeper:        rgba(246, 229, 141, 1);
+  --turbo:            rgba(249, 202,  36, 1);
+  --spiced_nectarine: rgba(255, 190, 118, 1);
+  --quince_jelly:     rgba(240, 147,  43, 1);
+  --pink_glamour:     rgba(255, 121, 121, 1);
+  --carmine_pink:     rgba(235,  77,  75, 1);
+  --june_bud:         rgba(186, 220,  88, 1);
+  --pure_apple:       rgba(106, 176,  76, 1);
+  --middle_blue:      rgba(126, 214, 223, 1);
+  --greenland_green:  rgba(34,  166, 179, 1);
+  --heliotrope:       rgba(224,  86, 253, 1);
+  --steel_pink:       rgba(190,  46, 221, 1);
+  --exodus_fruit:     rgba(104, 109, 224, 1);
+  --blurple:          rgba( 72,  52, 212, 1);
+  --deep_koamaru:     rgba( 48,  51, 107, 1);
+  --deep_cove:        rgba( 19,  15,  64, 1);
+  --coastal_breeze:   rgba(223, 249, 251, 1);
+  --hint_of_ice_pack: rgba(199, 236, 238, 1);
+  --soaring_eagle:    rgba(149, 175, 192, 1);
+  --wizard_grey:      rgba( 83,  92, 104, 1);
+
+  --black: rgba(1, 2, 1, 1);
+  --brilliantwhite: rgba(255, 255, 255, 1);
+  --white: rgba(245, 246, 250, 1);
+
+  --text-colour: var(--black);
+  --text-colour--inverse: var(--brilliantwhite);
+  --key-colour: var(--wizard_grey);
+
+  --border-radius: 0.2rem;
 }
 
 *,
@@ -92,7 +120,7 @@ body {
 
 body {
   background: var(--white);
-  font-size: 1.25em;
+  font-size: 1.5em;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 

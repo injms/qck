@@ -1,11 +1,103 @@
-.hdr {}
+.hdr {
+  margin: auto;
+  max-width: 120rem;
+  padding: 0 1.25rem;
+}
 
-.hdr__logo {}
+.hdr__logo {
+  border-radius: var(--border-radius);
+  color: var(--text-colour);
+  display: inline-block;
+  font-size: 1.5em;
+  font-weight: 900;
+  margin: 0.25em -0.25em;
+  padding: 0.25em;
+  text-decoration: none;
+  text-transform: lowercase;
+}
 
-.nvgtn {}
+.hdr__logo:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--key-colour);
+  text-decoration-thickness: 0.1em;
+}
 
-.nvgtn__list {}
+.hdr__logo:focus-visible {
+  background: var(--key-colour);
+  color: var(--text-colour--inverse);
+  outline: 0.25em solid transparent;
+}
 
-.nvgtn__list-item {}
+.hdr__logo:focus-visible:hover:not(:active) {
+  text-decoration-color: var(--text-colour--inverse);
+}
 
-.nvgtn__link {}
+.hdr__logo:active {
+  background: none;
+  color: var(--key-colour);
+  text-decoration: underline;
+  text-decoration-color: var(--key-colour);
+  text-decoration-thickness: 0.1em;
+}
+
+.nvgtn {
+  display: block;
+  padding: 0 0 1em 0;
+}
+
+.nvgtn__list {
+  color:var(--key-colour);;
+  list-style: disc;
+  padding-left: 1em;
+}
+
+@media screen and (min-width: 500px) {
+  .nvgtn__list {
+    padding-left: 0;
+  }
+
+  .nvgtn__list-item {
+    display: inline-block;
+  }
+
+  .nvgtn__list-item:after,
+  .nvgtn__list-item:first-child:before{
+    content: "\2981";
+  }
+}
+
+.nvgtn__link {
+  background-color: var(--white);
+  border-radius:  var(--border-radius);
+  color: var(--black);
+  display: inline-block;
+  line-height: 1.5;
+  margin: 0; /* 0 0 -0.25em; */
+  padding: 0 0.25em 0.125em 0.25em;
+  position: relative;
+  text-decoration-color: var(--key-colour);
+  text-decoration-thickness: 0.1em;
+  text-transform: lowercase;
+}
+
+.nvgtn__link:hover {
+  color: var(--key-colour);
+}
+
+.nvgtn__link:focus-visible {
+  background: var(--key-colour);
+  color: var(--text-colour--inverse);
+  outline: 0.25em solid transparent;
+}
+
+.nvgtn__link:focus-visible:hover:not(:active) {
+  text-decoration-color: var(--text-colour--inverse);
+}
+
+.nvgtn__link:active {
+  background: none;
+  color: var(--text-colour);
+  text-decoration: underline;
+  text-decoration-color: var(--text-colour);
+  text-decoration-thickness: 0.1em;
+}

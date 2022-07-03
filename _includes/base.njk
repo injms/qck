@@ -13,9 +13,15 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="disabled-adaptations" content="watch">
 
-    {% if site.themeColour %}
-      <meta name="theme-color" content="{{ site.themeColour }}">
-    {% endif %}
+    {% if site.themeColour -%}
+      {%- if site.themeColour.light -%}
+        <meta name="theme-color" content="{{ site.themeColour.light }}" media="(prefers-color-scheme: light)">
+      {%- endif %}
+      {% if site.themeColour.dark -%}
+        <meta name="theme-color" content="{{ site.themeColour.dark }}" media="(prefers-color-scheme: dark)">
+      {% endif -%}
+      <meta name="theme-color" content="{{ site.themeColour.light }}">
+    {%- endif %}
 
     <link rel="canonical" href="{{ site.baseURL }}{{ alternativeKey | href_to }}"
         {% if alternativeKey | hreflang %}
@@ -138,10 +144,6 @@
 
     {% include "components/_footer.njk" %}
 
-    {% if site.production == true %}
-      <!-- {{ site.commitRef }} -->
-    {% else %}
-      <p class="commit-reference">Debug: <a href="https://github.com/injms/qck/commit/{{ site.commitRef }}">{{ site.commitRef }}</a></p>
-    {% endif %}
+    <!-- {{ site.commitRef }} -->
   </body>
 </html>
