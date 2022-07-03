@@ -144,10 +144,6 @@
 
     {% include "components/_footer.njk" %}
 
-    {% if site.production == true %}
-      <!-- {{ site.commitRef }} -->
-    {% else %}
-      <p class="commit-reference">Debug: <a href="https://github.com/injms/qck/commit/{{ site.commitRef }}">{{ site.commitRef }}</a></p>
-    {% endif %}
+    <!-- {{ site.commitRef }} -->
   </body>
 </html>
