@@ -1,5 +1,4 @@
 .skip-to-content {
-  border-radius: 0.5em;
   clip-path: inset(50%);
   clip: rect(0 0 0 0);
   display: block;
@@ -9,20 +8,25 @@
   overflow: hidden;
   padding: 0;
   position: absolute;
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
   width: 1px;
 }
 
-.skip-to-content:focus {
+.skip-to-content:focus-visible {
   -webkit-clip-path: none;
   clip-path: none;
   clip: auto;
   height: auto;
-  margin: 1em;
+  margin: 0;
   overflow: visible;
-  padding: 1em;
+  outline: 0.25em solid transparent;
+  padding: 0.75em 1em 0.9em 1em;
   position: static;
   white-space: inherit;
   width: auto;
+  background-color: var(--key-colour);
+  color: var(--text-colour--inverse);
+  text-decoration-color: var(--text-colour--inverse);
+  text-decoration-thickness: 0.1em;
 }
