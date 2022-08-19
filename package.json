@@ -47,6 +47,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-standard": "^5.0.0",
     "i18next-pseudo": "^2.2.1",
-    "netlify-cli": "^10.17.8"
+    "netlify-cli": "^11.1.0"
   }
 }
