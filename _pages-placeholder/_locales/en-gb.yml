@@ -32,7 +32,7 @@ en-gb:
 
     read_this_page_in_different_language: "Read this page in a different language"
   project:
-    project_name: Project name
+    test_project: "Test project name"
 
   # The strings to use for URIs. The `url` namespace is the first place that
   # a key is looked up in, then it falls back to `common`. Both are slugified.
