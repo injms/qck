@@ -110,8 +110,6 @@ const configuration = (eleventyConfig) => {
       // Check if there's a version of this page in the lanugage that we want.
       const existsInLocale = languagesThatThePageIsAvailableIn.includes(thisLanguage)
 
-      // console.log(key, thisLanguage, existsInLocale)
-
       // We only need to return something if there **is not** a page available in
       // the language that we want - the `hreflang` attribute is only needed when
       // going from a page in one language to a page in a different language.
