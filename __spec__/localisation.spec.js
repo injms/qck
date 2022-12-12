@@ -97,7 +97,7 @@ const checkRelAlternate = () => {
       )
       assert(
         expected.href.includes(attribs.href),
-        'Incorrect href on `link`',
+        `Incorrect href on \`link\` in ${file} - expected one of ${JSON.stringify(expected.href)}, got ${attribs.href}`,
       )
     })
 
@@ -117,7 +117,7 @@ const checkRelAlternate = () => {
       )
       assert(
         expected.href.includes(attribs.href),
-        'Incorrect href on `a`',
+        `Incorrect href  on \`a\` in ${file} - expected one of ${JSON.stringify(expected.href)}, got ${attribs.href}`,
       )
     })
   })
