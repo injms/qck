@@ -133,7 +133,6 @@
   <body>
     {% include "components/_skip-to-content.njk" %}
     {% include "components/_header.njk" %}
-    {% include "components/_language-switcher.njk" %}
 
     {% block content %}
       <main class="wrapper" id="content">
@@ -142,6 +141,7 @@
       </main>
     {% endblock %}
 
+    {% include "components/_language-switcher.njk" %}
     {% include "components/_footer.njk" %}
 
     <!-- {{ site.commitRef }} -->
