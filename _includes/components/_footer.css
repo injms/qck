@@ -1,26 +1,36 @@
-.ftr {
+.ftr-section {
   background: var(--brilliantwhite);
-  margin: 0;
+  margin: 0 0 1em 0;
   padding: 1.25rem 1.25rem 3rem 1.25rem;
   max-width: 52em;
 }
 
+.ftr-section:last-child {
+  margin-bottom: 0;
+}
+
 @media screen and (min-width: 600px) {
-  .ftr {
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+  .ftr-section {
+    border-radius: var(--border-radius);
     margin-left: 1em;
     margin-right: 1em;
+  }
+
+  .ftr-section:last-child {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    border-bottom: 0;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .ftr {
+  .ftr-section {
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-.ftr__copyright-notice {
+.copyright-notice {
   font-size: 1rem;
+  line-height: 1.4;
   color: var(--wizard_grey);
 }

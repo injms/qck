@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="/assets/stylesheets/_footer.css">
 <footer class="ftr" id="footer">
-  <h2 class="visually-hidden">{{ 'copyright_heading' | i18n }}</h2>
-  <p class="ftr__copyright-notice">
-    {{ 'copyright' | i18n | safe }}
-  </p>
+  <section class="ftr-section">
+    <h2 class="visually-hidden">{{ 'copyright_heading' | i18n }}</h2>
+    <p class="copyright-notice">
+      {{- 'copyright' | i18n | safe -}}
+    </p>
+  </section>
 </footer>
