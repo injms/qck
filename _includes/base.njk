@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1"> #}
 
     <title>{{ title | lower }} - {{ 'site_name' | i18nbare(language) | lower }}</title>
 
@@ -24,9 +25,9 @@
     {%- endif %}
 
     <link rel="canonical" href="{{ site.baseURL }}{{ alternativeKey | href_to }}"
-        {% if alternativeKey | hreflang %}
-          hreflang="{{ alternativeKey | hreflang }}"
-        {% endif %}
+      {% if alternativeKey | hreflang %}
+        hreflang="{{ alternativeKey | hreflang }}"
+      {% endif %}
     >
 
     {% for alternative in alternatives -%}
