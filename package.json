@@ -14,7 +14,9 @@
     "watch": "npm run watch:site",
     "watch:site": "eleventy --serve",
     "lint": "npm run lint:javascript",
-    "lint:javascript": "eslint --config='.eslintrc.yaml' '**/*.js'"
+    "lint:javascript": "eslint --config='.eslintrc.yaml' '**/*.js'",
+    "dev": "netlify dev",
+    "dev:live": "netlify dev --live"
   },
   "keywords": [
     "portfolio",
