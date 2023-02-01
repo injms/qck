@@ -1,0 +1,9 @@
+{% macro sideways_list(params) %}
+  <ul class="sideways-list" aria-labelledby="{{ params.labelledby }}" role="list">
+    {% for item in params.items %}
+      <li class="sideways-list__item">
+        {{ item.text | i18n | link_to(item.link) | add_class('sideways-list__link sideways-list--{{ item.text }}') }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}

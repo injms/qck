@@ -2,11 +2,11 @@
   <link rel="stylesheet" href="/assets/stylesheets/_language-switcher.css">
   <div class="language-switcher">
       <h2 class="language-switcher__heading">{{ 'read_this_page_in_different_language' | i18n }}</h2>
-      <ul class="language-switcher__list-of-languages">
+      <ul class="sideways-list">
         {% for alternative in alternatives %}
-          <li class="language-switcher__language-item">
+          <li class="sideways-list__item">
             <a rel="alternate"
-              class="language-switcher__language-link"
+              class="sideways-list__link"
               href="{{ site.baseURL }}{{ alternative.url }}"
               hreflang="{{ alternative.language }}"
               lang="{{ alternative.language }}">
