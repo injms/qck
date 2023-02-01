@@ -18,6 +18,8 @@ const limitTo = require('./_filters/collection/limit-to')
 
 const Image = require('@11ty/eleventy-img')
 
+const { EleventyEdgePlugin } = require('@11ty/eleventy')
+
 // Allows a filter to not need the `safe` filter when returning HTML
 const { runtime: { markSafe } } = require('nunjucks')
 
@@ -42,6 +44,8 @@ const site = require('./_data/site')
 
 // Where the magic happens
 const configuration = (eleventyConfig) => {
+  eleventyConfig.addPlugin(EleventyEdgePlugin)
+
   // We want Eleventy to ignore the Sass files, but we don't want git to ignore
   // them - we need to tell Eleventy to ignore the `.gitignore` file (lol) and
   // _only_ use the `.eleventyignore` file.

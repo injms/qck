@@ -10,6 +10,10 @@ targetPort = 8_080
 [functions]
 directory = "_functions"
 
+[[edge_functions]]
+function = "eleventy-edge"
+path = "/*"
+
 [[redirects]]
 from = "/"
 to = "/en-gb/"
@@ -19,7 +23,6 @@ status = 301
 for = "/*"
 
 [headers.values]
-Content-Security-Policy = "default-src 'self' ; script-src 'self' ; style-src 'self' ; img-src 'self' ; upgrade-insecure-requests; block-all-mixed-content; report-uri https://injms.report-uri.com/r/d/csp/enforce"
 Expect-CT = "max-age=0, report-uri='https://injms.report-uri.com/r/d/ct/reportOnly'"
 Referrer-Policy = "strict-origin-when-cross-origin"
 X-Content-Type-Options = "nosniff"
