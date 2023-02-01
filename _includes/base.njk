@@ -135,8 +135,7 @@
     {% include "components/_header.njk" %}
 
     {% block content %}
-      <main class="wrapper" id="content">
-        <h1>{{ title }}</h1>
+      <main class="centred-container" id="content">
         {{ content | safe }}
       </main>
     {% endblock %}

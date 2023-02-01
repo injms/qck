@@ -242,3 +242,28 @@ a:link {
     line-height: 1.1;
   }
 }
+
+.centred-container {
+  margin: 0 0 1em 0;
+  padding: 1.25rem 1.25rem 3rem 1.25rem;
+  max-width: 52em;
+}
+
+@media screen and (min-width: 600px) {
+  .centred-container {
+    border-radius: var(--border-radius);
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .centred-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.centred-container--background {
+  background: var(--brilliantwhite);
+}
