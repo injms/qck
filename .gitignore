@@ -20,3 +20,5 @@ netlify/edge-functions/_generated
 .stylelintcache
 
 .DS_Store
+
+.vscode
