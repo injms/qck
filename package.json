@@ -32,7 +32,7 @@
     "url": "https://inj.ms"
   },
   "dependencies": {
-    "@11ty/eleventy": "^2.0.0-canary.33",
+    "@11ty/eleventy": "^2.0.0",
     "@11ty/eleventy-img": "^2.0.1",
     "@injms/quack-nunjucks-filters": "^0.12.1",
     "cheerio": "^1.0.0-rc.12",
