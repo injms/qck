@@ -38,7 +38,7 @@ const q = function ({
     .sort((a, b) => {
       // Reverse so that order is always first, even if no parameter is given.
       // eg 'ASC' is valid and would give ['ASC']; 'date ASC' is also valid and
-      // would give ['ASC', 'date']; 'date' is not valid as it has no direciton.
+      // would give ['ASC', 'date']; 'date' is not valid as it has no direction.
       // Default parameter is date, default order is descending
       const [order, parameter = 'date'] = orderBy.split(' ').reverse()
 

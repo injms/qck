@@ -9,7 +9,7 @@ const addattribute = ({
   if (!element) throw new Error('No element parameter given.')
   if (!attribute) throw new Error('No attribute parameter given.')
 
-  // If the element is just a string we need to wrap it in a span so we actually
+  // If the element is just a string we need to wrap it in a span so we can
   // add an attribute to something.
   const wrappedElement = typeof element === 'string'
     ? `<span>${element}</span>`
