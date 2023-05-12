@@ -4,21 +4,23 @@ const {
 } = require('path')
 
 const { load: cheerio } = require('cheerio')
+
+const Image = require('@11ty/eleventy-img')
+const { EleventyEdgePlugin } = require('@11ty/eleventy')
+
 const {
   cssmin,
   debug,
-  humandate,
-  isodate,
 } = require('@injms/quack-nunjucks-filters')
+
 const markdownify = require('./_filters/markdownify')
 
 const shuffle = require('./_filters/collection/shuffle')
 const exclude = require('./_filters/collection/exclude')
 const limitTo = require('./_filters/collection/limit-to')
 
-const Image = require('@11ty/eleventy-img')
-
-const { EleventyEdgePlugin } = require('@11ty/eleventy')
+const humandate = require('./_filters/date/humandate')
+const isodate = require('./_filters/date/isodate')
 
 // Allows a filter to not need the `safe` filter when returning HTML
 const { runtime: { markSafe } } = require('nunjucks')
