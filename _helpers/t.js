@@ -10,13 +10,13 @@ const site = require('../_data/site')
 // * eg key not present: _t('hello', 'de') would give { text: 'Hello', fallback:
 //   true }
 const translate = (key, locale = site.defaultLanguage) => {
-  const i18n = i18next.createInstance()
-  let pseudo = !!site.pseudoLocalisation
+  let pseudo = site.pseudoLocalisation
 
   if (key.startsWith('url:')) {
     pseudo = false
   }
 
+  const i18n = i18next.createInstance()
   i18n
     .use(new Pseudo({
       languageToPseudo: 'en-gb',
@@ -43,7 +43,7 @@ const translate = (key, locale = site.defaultLanguage) => {
       postProcess: ['pseudo'],
     })
 
-  // To allow for namespaces, we need to see if they key (eg 'photos', or
+  // To allow for namespaces, we need to see if the key (eg 'photos', or
   // 'project:orion') ends with the default, non-namespaced key (eg 'photos, or
   // 'orion'.)
   const keyExistsInCurrentLocale = key.endsWith(test.t(key))
