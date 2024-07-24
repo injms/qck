@@ -40,7 +40,7 @@
     "i18next": "^23.12.2",
     "jimp": "^0.22.12",
     "lodash": "^4.17.21",
-    "yaml": "^2.4.5"
+    "yaml": "^2.5.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
