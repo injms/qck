@@ -12,6 +12,6 @@ jobs:
       with:
         node-version-file: ".nvmrc"
         cache: npm
-    - run: npm ci
+    - run: npm ci --include=optional
     - run: ELEVENTY_PLACEHOLDER=true npm run build # Build using placeholder content
     - run: npm run test:runner # Run test set for running in this workflow
