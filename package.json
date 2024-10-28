@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^2.0.1",
-    "@11ty/eleventy-img": "^3.1.8",
+    "@11ty/eleventy-img": "^5.0.0",
     "@injms/quack-nunjucks-filters": "^0.12.1",
     "cheerio": "^1.0.0",
     "exifr": "^7.1.3",
