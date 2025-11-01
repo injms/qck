@@ -1,4 +1,4 @@
-const cleanKey = require('../../_helpers/cleanKey')
+import cleanKey from '../../_helpers/cleanKey.js'
 
 const exclude = function (collection, exclusions = []) {
   if (typeof exclusions === 'string') {
@@ -13,4 +13,4 @@ const exclude = function (collection, exclusions = []) {
     .filter(({ data: { alternativeKey } }) => !exclusions.includes(alternativeKey))
 }
 
-module.exports = exclude
+export default exclude

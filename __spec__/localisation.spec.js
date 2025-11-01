@@ -1,17 +1,17 @@
-const {
+import {
   existsSync,
   statSync,
   readFileSync,
-} = require('fs')
+} from 'fs'
 
-const { load: cheerio } = require('cheerio')
+import { load as cheerio } from 'cheerio'
 
-const {
+import {
   assert,
   log,
-} = console
+} from 'console'
 
-const site = require('../_data/site')
+import site from '../_data/site.js'
 
 const checkFolderStructure = () => {
   const expected = {

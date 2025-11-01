@@ -1,16 +1,16 @@
-const exifr = require('exifr')
-const i18next = require('i18next')
-const Jimp = require('jimp')
+import exifr from 'exifr'
+import i18next from 'i18next'
+import { Jimp } from 'jimp'
 
-const { basename, dirname, extname, join } = require('path')
-const { readdirSync } = require('fs')
+import { basename, dirname, extname, join } from 'path'
+import { readdirSync } from 'fs'
 
-const cleanKey = require('../_helpers/cleanKey')
-const aspectRatio = require('../_helpers/calculateAspectRatio')
+import cleanKey from '../_helpers/cleanKey.js'
+import aspectRatio from '../_helpers/calculateAspectRatio.js'
 
-const site = require('./site')
+import site from './site.js'
 
-module.exports = {
+export default {
   metadata: function ({ metadata, language }) {
     const i18n = i18next.createInstance()
     i18n.init(site.i18n)

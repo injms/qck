@@ -12,4 +12,4 @@
  */
 const cleanKey = (string) => string.endsWith('/') ? string : `${string}/`
 
-module.exports = cleanKey
+export default cleanKey

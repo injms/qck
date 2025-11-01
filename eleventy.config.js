@@ -1,53 +1,46 @@
-const {
+import {
   extname,
   basename,
-} = require('path')
+} from 'path'
 
-const { load: cheerio } = require('cheerio')
+import { load as cheerio } from 'cheerio'
 
-const Image = require('@11ty/eleventy-img')
-const { EleventyEdgePlugin } = require('@11ty/eleventy')
+import Image from '@11ty/eleventy-img'
 
-const {
-  cssmin,
-  debug,
-} = require('@injms/quack-nunjucks-filters')
+import markdownify from './_filters/markdownify.js'
 
-const markdownify = require('./_filters/markdownify')
+import shuffle from './_filters/collection/shuffle.js'
+import exclude from './_filters/collection/exclude.js'
+import limitTo from './_filters/collection/limit-to.js'
 
-const shuffle = require('./_filters/collection/shuffle')
-const exclude = require('./_filters/collection/exclude')
-const limitTo = require('./_filters/collection/limit-to')
-
-const humandate = require('./_filters/date/humandate')
-const isodate = require('./_filters/date/isodate')
-
-// Allows a filter to not need the `safe` filter when returning HTML
-const { runtime: { markSafe } } = require('nunjucks')
+import humandate from './_filters/date/humandate.js'
+import isodate from './_filters/date/isodate.js'
 
 // Translation helper
-const _t = require('./_helpers/t')
+import _t from './_helpers/t.js'
 
 // Ensures URL and page key consistancy
-const cleanKey = require('./_helpers/cleanKey')
+import cleanKey from './_helpers/cleanKey.js'
 
 // Get the collection for the page key, and an (optional) page parameter
-const get = require('./_helpers/get')
-const q = require('./_helpers/query')
+import get from './_helpers/get.js'
+import q from './_helpers/query.js'
 
 // Add an attribute to a DOM element.
-const addAttribute = require('./_helpers/addAttribute')
+import addAttribute from './_helpers/addAttribute.js'
 
 // Given a width and a height, returns a name for the aspect ratio
-const aspectRatio = require('./_helpers/calculateAspectRatio')
+import aspectRatio from './_helpers/calculateAspectRatio.js'
 
 // Settings and configurations
-const site = require('./_data/site')
+import site from './_data/site.js'
+
+// Allows a filter to not need the `safe` filter when returning HTML
+import nunjucks from 'nunjucks'
+const { markSafe } = nunjucks.runtime
 
 // Where the magic happens
-const configuration = (eleventyConfig) => {
-  eleventyConfig.addPlugin(EleventyEdgePlugin)
-
+export default async (eleventyConfig) => {
   // We want Eleventy to ignore the Sass files, but we don't want git to ignore
   // them - we need to tell Eleventy to ignore the `.gitignore` file (lol) and
   // _only_ use the `.eleventyignore` file.
@@ -60,8 +53,7 @@ const configuration = (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy({ '_includes/**/*.css': 'assets/stylesheets/' })
   eleventyConfig.addPassthroughCopy({ '_layouts/**/*.css': 'assets/stylesheets/' })
 
-  eleventyConfig.addFilter('cssmin', (css) => cssmin(css))
-  eleventyConfig.addFilter('debug', (thing) => debug(thing))
+  eleventyConfig.addFilter('cssmin', (css) => (css))
   eleventyConfig.addFilter('isodate', (datestring) => isodate(datestring))
   eleventyConfig.addFilter('markdownify', (markdown) => markdownify.render(markdown))
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
@@ -396,5 +388,3 @@ const configuration = (eleventyConfig) => {
     },
   }
 }
-
-module.exports = configuration

@@ -1,7 +1,7 @@
-const i18next = require('i18next')
-const Pseudo = require('i18next-pseudo')
+import i18next from 'i18next'
+import Pseudo from 'i18next-pseudo'
 
-const site = require('../_data/site')
+import site from '../_data/site.js'
 
 // _t looks up the translation, and returns the string given as well as
 // whether that is a fallback:
@@ -54,4 +54,4 @@ const translate = (key, locale = site.defaultLanguage) => {
   }
 }
 
-module.exports = translate
+export default translate

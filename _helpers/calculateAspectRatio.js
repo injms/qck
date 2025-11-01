@@ -15,4 +15,4 @@ const aspectRatio = ({ width, height }) => {
   }
 }
 
-module.exports = aspectRatio
+export default aspectRatio

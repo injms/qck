@@ -1,10 +1,9 @@
-const MarkdownIt = require('markdown-it')
-const cleanKey = require('../_helpers/cleanKey')
-const q = require('../_helpers/query')
+import { extname } from 'path'
 
-const {
-  extname,
-} = require('path')
+import MarkdownIt from 'markdown-it'
+
+import cleanKey from '../_helpers/cleanKey.js'
+import q from '../_helpers/query.js'
 
 const md = new MarkdownIt({
   html: true,
@@ -83,4 +82,4 @@ markdownLinkI18n.defaultRender = function (tokens, idx, options, env, self) {
 
 md.use(markdownLinkI18n)
 
-module.exports = md
+export default md

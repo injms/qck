@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   layout: 'photo.njk',
   type: 'photo',
   language: 'en-gb',

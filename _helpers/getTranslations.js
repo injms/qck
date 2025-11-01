@@ -1,5 +1,5 @@
-const { readdirSync, readFileSync } = require('fs')
-const { parse } = require('yaml')
+import { readdirSync, readFileSync } from 'fs'
+import { parse } from 'yaml'
 
 const getTranslations = (localeDirectory = '_locales') => {
   const localeDirectoryContents = readdirSync(localeDirectory)
@@ -15,4 +15,4 @@ const getTranslations = (localeDirectory = '_locales') => {
   return translations
 }
 
-module.exports = getTranslations
+export default getTranslations

@@ -1,4 +1,4 @@
-const cloneDeep = require('lodash/cloneDeep')
+import { cloneDeep } from 'lodash-es'
 
 const shuffle = function (collection) {
   if (!collection) {
@@ -15,4 +15,4 @@ const shuffle = function (collection) {
   return clonedCollection
 }
 
-module.exports = shuffle
+export default shuffle

@@ -22,4 +22,4 @@ const humanDate = (date, locale = 'en-GB') => {
   })
 }
 
-module.exports = humanDate
+export default humanDate
