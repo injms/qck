@@ -1,11 +1,13 @@
+import { get } from 'lodash-es'
+
+import cleanKey from './cleanKey.js'
+import q from './query.js'
+
+import site from '../_data/site.js'
+
 const _ = {
-  get: require('lodash/get'),
+  get,
 }
-
-const cleanKey = require('./cleanKey')
-const q = require('./query')
-
-const site = require('../_data/site')
 
 /**
  * @param {Object} config
@@ -18,7 +20,7 @@ const site = require('../_data/site')
  * @returns {string} rtrn.value
  * @returns {boolean} rtrn.fallback
  */
-const get = function ({
+export default function ({
   collectionName = 'all',
   key,
   locale,
@@ -72,5 +74,3 @@ const get = function ({
     fallback: !!thisPageThisLanguage,
   }
 }
-
-module.exports = get

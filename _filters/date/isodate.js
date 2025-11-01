@@ -17,4 +17,4 @@ const isoDate = (date) => {
   return parsedDate.toISOString()
 }
 
-module.exports = isoDate
+export default isoDate

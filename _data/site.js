@@ -1,5 +1,6 @@
-const getTranslations = require('../_helpers/getTranslations')
-const { join } = require('path')
+import { join } from 'path'
+
+import getTranslations from '../_helpers/getTranslations.js'
 
 // All the default data and settings. Default strings go into the i18n files.
 const site = {
@@ -51,4 +52,4 @@ site.i18n = {
   resources: getTranslations(localisationFolder),
 }
 
-module.exports = site
+export default site

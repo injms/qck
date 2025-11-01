@@ -1,6 +1,8 @@
+import { get, set } from 'lodash-es'
+
 const _ = {
-  get: require('lodash/get'),
-  set: require('lodash/set'),
+  get,
+  set,
 }
 
 /**
@@ -118,4 +120,4 @@ const q = function ({
   return queriedCollection
 }
 
-module.exports = q
+export default q

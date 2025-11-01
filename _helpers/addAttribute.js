@@ -1,7 +1,8 @@
-const { load } = require('cheerio')
-const { runtime: { markSafe } } = require('nunjucks')
+import { load } from 'cheerio'
+import nunjucks from 'nunjucks'
+const { markSafe } = nunjucks.runtime
 
-const addattribute = ({
+const addAttribute = ({
   element,
   attribute,
   content = true,
@@ -29,4 +30,4 @@ const addattribute = ({
   return markSafe($.html(elementWithAttribute))
 }
 
-module.exports = addattribute
+export default addAttribute
