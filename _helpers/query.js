@@ -7,7 +7,7 @@ const _ = {
 
 /**
  * The query function allows us to ask a specific collection for certain pages
- * with specific paraameters returned in specific locales - for example, the
+ * with specific parameters returned in specific locales - for example, the
  * contact page's title and metadata in Spanish; or we can ask for every single
  * page's title and slug in all languages; or we can ask for the first 3 pages
  * from the photo collection in French.

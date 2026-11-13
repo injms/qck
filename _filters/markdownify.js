@@ -24,7 +24,7 @@ const markdownLinkI18n = function (md) {
         // The attributes are an array of arrays; so
         // <a href="https://example.com" id="example-link"> would be
         // [['href', 'https://example.com], ['id', 'example-link']].
-        // This destructes the href contents only for use in constructing the
+        // This destructures the href contents only for use in constructing the
         // key.
         let hrefPosition
         let [[, key]] = token.attrs.filter(([attribute], i) => {
