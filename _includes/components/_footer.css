@@ -1,19 +1,14 @@
 .ftr-section {
   background: var(--brilliantwhite);
-  margin: 0 0 1em 0;
-  padding: 1.25rem 1.25rem 3rem 1.25rem;
-  max-width: 52em;
-}
-
-.ftr-section:last-child {
-  margin-bottom: 0;
+  padding: 1.25rem 1.25rem 2.5rem 1.25rem;
+  margin: auto;
+  width: 100%;
+  max-width: var(--page-width);
 }
 
 @media screen and (min-width: 600px) {
   .ftr-section {
     border-radius: var(--border-radius);
-    margin-left: 1em;
-    margin-right: 1em;
   }
 
   .ftr-section:last-child {
@@ -22,15 +17,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
-  .ftr-section {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 .copyright-notice {
   font-size: 1rem;
   line-height: 1.4;
-  color: var(--wizard_grey);
 }
