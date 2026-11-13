@@ -140,14 +140,14 @@ export default {
     // This removes the trailing slashes, and replaces the middle slashes with
     // colons.
     // For example:
-    //    /one/two/three/four/ => one:two:three:four
-    //    /photos/beautiful-sunset/ => photos:beautiful-sunset
+    //    /one/two/three/four/ => one::two::three::four
+    //    /photos/beautiful-sunset/ => photos::beautiful-sunset
     //    /about/ => about
     const key = cleanKey(dirname(inputPath))
       .replace(pageFolder, '')
       .replace(/^\//, '')
       .replace(/\/$/, '')
-      .replace(/\//, ':')
+      .replace(/\//g, '::')
 
     return key
   },
