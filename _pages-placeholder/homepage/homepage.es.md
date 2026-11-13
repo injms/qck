@@ -1,6 +1,6 @@
 ---
 title: "Página principal"
-layout: "homepage"
+layout: "homepage.njk"
 language: "es"
 permalink: "/{{ language }}/"
 highlight:
