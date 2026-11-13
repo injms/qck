@@ -7,13 +7,6 @@ framework = "#custom"
 command = "eleventy --serve"
 targetPort = 8_080
 
-[functions]
-directory = "_functions"
-
-[[edge_functions]]
-function = "eleventy-edge"
-path = "/*"
-
 [[redirects]]
 from = "/"
 to = "/en-gb/"
