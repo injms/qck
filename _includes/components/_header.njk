@@ -1,28 +1,22 @@
-{% from "components/_sideways-list.njk" import sideways_list with context %}
-
 <link rel="stylesheet" href="/assets/stylesheets/_header.css">
+
 <header class="hdr">
   {{ 'site_name' | i18n | link_to('/homepage/') | add_class('hdr__logo') }}
-  <nav class="nvgtn">
-    <h2 id="main-navigation" class="visually-hidden">{{ 'main_navigation' | i18n }}</h2>
-    {{
-      sideways_list({
-        labelledby: "main-navigation",
-        items: [
-          {
-            text: "photos",
-            link: "/photos/"
-          },
-          {
-            text: "about",
-            link: "/about/"
-          },
-          {
-            text: "contact",
-            link: "/contact/"
-          }
-        ]
-      })
-    }}
+
+  <nav class="nvgtn" aria-labelledby="main-navigation">
+    <h2 id="main-navigation" class="vh">{{ 'main_navigation' | i18n }}</h2>
+
+    <ul class="nvgtn-list" role="list">
+      <li class="nvgtn-list__item">
+        {{ "photos" | i18n | link_to("/photos/") | add_class('nvgtn-list__link') }}
+      </li>
+      <li class="nvgtn-list__item">
+        {{ "about" | i18n | link_to("/about/") | add_class('nvgtn-list__link') }}
+      </li>
+      <li class="nvgtn-list__item">
+        {{ "contact" | i18n | link_to("/contact/") | add_class('nvgtn-list__link') }}
+      </li>
+    </ul>
+
   </nav>
 </header>
