@@ -1,7 +1,4 @@
-import {
-  extname,
-  basename,
-} from 'path'
+import path from 'node:path'
 
 import { load as cheerio } from 'cheerio'
 
@@ -174,7 +171,7 @@ export default async (eleventyConfig) => {
 
     const pageFolder = this.ctx.page.inputPath
       .replace(this.ctx.page.filePathStem, '')
-      .replace(extname(this.ctx.page.inputPath), '')
+      .replace(path.extname(this.ctx.page.inputPath), '')
 
     let key = cleanKey(url)
 
@@ -337,13 +334,13 @@ export default async (eleventyConfig) => {
       return sizes
     }
 
-    const imageMetadata = await Image(filename, {
+    const imageMetadata = await Image(path.join(site.basePagesFolder, filename), {
       widths: resizeTo(),
       formats: [outputFormat].flat(),
       urlPath: '/assets/images/',
       outputDir: './site/assets/images/',
       filenameFormat: function (id, src, width, format, options) {
-        const name = basename(src, extname(src))
+        const name = path.basename(src, path.extname(src))
         // id: hash of the original image
         // src: original image path
         // width: current width in px
