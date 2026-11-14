@@ -8,6 +8,7 @@ import { load as cheerio } from 'cheerio'
 import Image from '@11ty/eleventy-img'
 
 import markdownify from './_filters/markdownify.js'
+import speciesify from './_filters/speciesify.js'
 
 import shuffle from './_filters/collection/shuffle.js'
 import exclude from './_filters/collection/exclude.js'
@@ -53,22 +54,19 @@ export default async (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy({ '_includes/**/*.css': 'assets/stylesheets/' })
   eleventyConfig.addPassthroughCopy({ '_layouts/**/*.css': 'assets/stylesheets/' })
 
-  eleventyConfig.addFilter('cssmin', (css) => css)
-  eleventyConfig.addFilter('isodate', isodate)
   eleventyConfig.addFilter('markdownify', (markdown) => {
     return markdownify.render(markdown)
   })
-  eleventyConfig.addFilter('speciesify', (string) => {
-    return string.replace(/^_/, '<i>').replace(/_$/, '</i>')
-  })
+  eleventyConfig.addFilter('isodate', isodate)
+  eleventyConfig.addFilter('speciesify', speciesify)
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
     const setLocale = locale || this.ctx.language
     return humandate(datestring, setLocale)
   })
 
-  eleventyConfig.addFilter('shuffle', (collection) => shuffle(collection))
-  eleventyConfig.addFilter('exclude', (collection, exclusions = []) => exclude(collection, exclusions))
-  eleventyConfig.addFilter('limit_to', (collection, limit = 3) => limitTo(collection, limit))
+  eleventyConfig.addFilter('shuffle', shuffle)
+  eleventyConfig.addFilter('exclude', exclude)
+  eleventyConfig.addFilter('limit_to', limitTo)
 
   // eg page.alternativeKey | get('title', 'en-gb')
   eleventyConfig.addFilter('get', function (key, parameter, locale) {
