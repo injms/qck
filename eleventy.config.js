@@ -217,10 +217,11 @@ export default async (eleventyConfig) => {
       false, // `false` parameter to stop this being wrapped in html and body tags.
     )
 
-    if ($('span[lang]').length === 1) {
-      const $span = $('span')
-      const lang = $span.attr('lang')
-      text = $span.text()
+    const $spanWithLang = $('span[lang]')
+
+    if ($spanWithLang.length === 1) {
+      const lang = $spanWithLang.attr('lang')
+      text = $spanWithLang.text()
 
       linkAttributes.push(`lang="${lang}"`)
     }
