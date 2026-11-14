@@ -13,6 +13,7 @@ const site = {
     if (process.env.DEPLOY_PRIME_URL) return process.env.DEPLOY_PRIME_URL
     return 'http://localhost:8080'
   })(),
+  basePagesFolder: process.env.ELEVENTY_PLACEHOLDER === 'true' ? '_pages-placeholder' : '_pages',
   themeColour: {
     light: 'rgba(245, 246, 250, 1)',
   },
@@ -39,7 +40,7 @@ const site = {
 }
 
 const localisationFolder = join(
-  process.env.ELEVENTY_PLACEHOLDER === 'true' ? '_pages-placeholder' : '_pages',
+  site.basePagesFolder,
   '_locales',
 )
 
