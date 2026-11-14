@@ -4,6 +4,7 @@ import { Jimp, JimpMime } from 'jimp'
 import { getColor } from 'colorthief'
 
 import path from 'node:path'
+import { readdirSync } from 'node:fs'
 import fs from 'node:fs/promises'
 
 import cleanKey from '../_helpers/cleanKey.js'
