@@ -53,9 +53,14 @@ export default async (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy({ '_includes/**/*.css': 'assets/stylesheets/' })
   eleventyConfig.addPassthroughCopy({ '_layouts/**/*.css': 'assets/stylesheets/' })
 
-  eleventyConfig.addFilter('cssmin', (css) => (css))
-  eleventyConfig.addFilter('isodate', (datestring) => isodate(datestring))
-  eleventyConfig.addFilter('markdownify', (markdown) => markdownify.render(markdown))
+  eleventyConfig.addFilter('cssmin', (css) => css)
+  eleventyConfig.addFilter('isodate', isodate)
+  eleventyConfig.addFilter('markdownify', (markdown) => {
+    return markdownify.render(markdown)
+  })
+  eleventyConfig.addFilter('speciesify', (string) => {
+    return string.replace(/^_/, '<i>').replace(/_$/, '</i>')
+  })
   eleventyConfig.addFilter('humandate', function (datestring, locale) {
     const setLocale = locale || this.ctx.language
     return humandate(datestring, setLocale)
