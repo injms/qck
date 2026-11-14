@@ -129,6 +129,10 @@
       {% endif %}
     {% endif %}
     <link rel="stylesheet" href="/assets/stylesheets/base.css">
+
+    {%- if layoutStylesheet -%}
+      <link rel="stylesheet" href="/assets/stylesheets/{{ layoutStylesheet }}">
+    {% endif %}
   </head>
 
   <body>

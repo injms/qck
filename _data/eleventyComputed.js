@@ -2,8 +2,7 @@ import exifr from 'exifr'
 import i18next from 'i18next'
 import { Jimp } from 'jimp'
 
-import { basename, dirname, extname, join } from 'path'
-import { readdirSync } from 'fs'
+import fs from 'node:fs/promises'
 
 import cleanKey from '../_helpers/cleanKey.js'
 import aspectRatio from '../_helpers/calculateAspectRatio.js'
@@ -23,6 +22,17 @@ export default {
   },
   layout: function ({ layout }) {
     return layout || 'default'
+  },
+  layoutStylesheet: async function ({ eleventy, layout }) {
+    const filename = basename(layout, '.njk') + '.css'
+    const stylesheetPath = join(eleventy.directories.layouts, filename)
+
+    try {
+      await fs.access(stylesheetPath)
+      return filename
+    } catch (err) {
+      return false
+    }
   },
   projectKey: function ({ project }) {
     if (project) {
