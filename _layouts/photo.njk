@@ -28,7 +28,7 @@
     <aside>
       {% if previousPhoto %}
         <div class="previous-photo">
-          {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | add_class('previous-link')  | addRel('previous')}}
+          {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | add_class('previous-link')  | add_rel('previous')}}
           {# {% image previousPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
         </div>
       {% endif %}
@@ -44,7 +44,7 @@
 
       {% if nextPhoto %}
         <div class="next-photo">
-          {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | add_class('next-link') | addRel('next') }}
+          {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | add_class('next-link') | add_rel('next') }}
           {# {% image nextPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
         </div>
       {% endif %}

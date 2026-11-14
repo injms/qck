@@ -5,7 +5,7 @@
     {% for project in collections.projects %}
       <h2>
         <a href="#{{ project.slug }}"><img src="/assets/icons/link.svg" alt="" aria-hidden="true"></a>
-        {{ project.nameKey | i18n | addId(project.slug) }}
+        {{ project.nameKey | i18n | add_id(project.slug) }}
       </h2>
       <ul class="photo-list" data-list-length="{{ collections.photos | projectfilter(project.key) | length }}">
         {% for photo in collections.photos | projectfilter(project.key) %}

@@ -268,10 +268,10 @@ export default async (eleventyConfig) => {
   eleventyConfig.addFilter('add_class', function (element, className) {
     return addAttribute({ element, attribute: 'class', content: className })
   })
-  eleventyConfig.addFilter('addRel', function (element, rel) {
+  eleventyConfig.addFilter('add_rel', function (element, rel) {
     return addAttribute({ element, attribute: 'rel', content: rel })
   })
-  eleventyConfig.addFilter('addId', function (element, id) {
+  eleventyConfig.addFilter('add_id', function (element, id) {
     return addAttribute({ element, attribute: 'id', content: id })
   })
 
