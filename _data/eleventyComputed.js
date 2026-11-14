@@ -43,18 +43,18 @@ export default {
     if (image) return image
 
     if (type === 'photo') {
-      const base = basename(page.inputPath, '.md')
       const folder = dirname(page.inputPath)
 
       const file = readdirSync(folder)
-        .filter(filename => {
-          return extname(filename) === '.jpg'
-        })
-        .filter(filename => {
-          return basename(filename, '.jpg') === base
-        })
+        .filter(filename => extname(filename) === '.jpg')
 
-      if (file.length >= 1) return join(folder, file[0])
+      if (file.length === 1) {
+        return join(
+          path.sep,
+          folder.split(path.sep).slice(2).join(path.sep),
+          file[0],
+        )
+      }
     }
   },
   imageMetadata: async function ({ imageMetadata, type, image }) {
