@@ -1,6 +1,7 @@
 import exifr from 'exifr'
 import i18next from 'i18next'
-import { Jimp } from 'jimp'
+import { Jimp, JimpMime } from 'jimp'
+import { getColor } from 'colorthief'
 
 import path from 'node:path'
 import fs from 'node:fs/promises'
@@ -58,36 +59,58 @@ export default {
       }
     }
   },
-  imageMetadata: async function ({ imageMetadata, type, image }) {
+  imageMetadata: async function ({ imageMetadata, type, image, dominant_colour: dominantColour }) {
     if (imageMetadata) return imageMetadata
 
     if (type === 'photo' && image !== '' && image !== undefined) {
-      const metadata = await exifr.parse(image)
-      const thumbnail = await exifr.thumbnail(image)
+      try {
+        const imagePath = path.join(site.basePagesFolder, image)
+        const metadata = await exifr.parse(imagePath) ?? {}
+        const img = await Jimp.fromBuffer(await exifr.thumbnail(imagePath))
 
-      const img = await Jimp.read(thumbnail)
+        const { width, height } = img.bitmap
 
-      const { width, height } = img.bitmap
+        if (Object.keys(metadata).length) {
+          metadata.Model = metadata.Model.replace(/DIGITAL/, '').trim()
 
-      metadata.Model = metadata.Model.replace(/DIGITAL/, '').trim()
+          metadata.LensModel = metadata.LensModel
+            .replace(/\.0/g, '') // Remove trailing decimals: `200.0` to `200`
+            .replace(/\smm/, 'mm') // Remove space between number and `mm`
+            .replace(/-/g, '&mdash;') // Replace hyphen with em dash.
+            .trim()
 
-      metadata.LensModel = metadata.LensModel
-        .replace(/\.0/g, '') // Remove trailing decimals: `200.0` to `200`
-        .replace(/\smm/, 'mm') // Remove space between number and `mm`
-        .replace(/-/g, '&mdash;') // Replace hypher with mdash.
-        .trim()
+          const vSmall = img
+            .clone()
+            .scaleToFit({ w: 20, h: 20 })
 
-      metadata.aspectRatio = aspectRatio({
-        width,
-        height,
-      })
+          metadata.thumbnail = vSmall.getBase64(JimpMime.jpeg)
 
-      metadata.thumbnail = await img
-        .clone()
-        .scaleToFit(20, 20)
-        .getBase64Async(Jimp.MIME_JPEG)
+          if (dominantColour) {
+            metadata.dominantColour = {
+              srgb: dominantColour,
+              p3: dominantColour,
+            }
+          } else {
+            const gotColour = await getColor(
+              await vSmall.getBuffer(JimpMime.jpeg),
+            )
 
-      return metadata
+            const srgb = gotColour.rgb()
+            const p3 = gotColour.rgb('display-p3')
+
+            metadata.dominantColour = {
+              srgb: `rgba(${srgb.r},${srgb.g},${srgb.b},1)`,
+              p3: `rgba(${p3.r},${p3.g},${p3.b},1)`,
+            }
+          }
+        }
+
+        metadata.aspectRatio = aspectRatio({ width, height })
+
+        return metadata
+      } catch (err) {
+        console.error(err)
+      }
     }
   },
   language: function ({ language }) {
