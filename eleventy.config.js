@@ -46,7 +46,7 @@ export default async (eleventyConfig) => {
 
   eleventyConfig.setLibrary('md', markdownify)
 
-  // eleventyConfig.addPassthroughCopy({ '_pages/**/*.jpg': 'assets/images/' })
+  eleventyConfig.addPassthroughCopy({ '_pages/**/*.jpg': 'assets/images/' })
   eleventyConfig.addPassthroughCopy({ '_assets/': 'assets/' })
   eleventyConfig.addPassthroughCopy({ '_includes/**/*.css': 'assets/stylesheets/' })
   eleventyConfig.addPassthroughCopy({ '_layouts/**/*.css': 'assets/stylesheets/' })
