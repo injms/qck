@@ -296,7 +296,7 @@ export default async (eleventyConfig) => {
       where: `data.language = ${site.defaultLanguage}`,
     })
       .map(({ data }) => data?.projectKey) // Just the key please.
-      .filter((item) => !!item) // Remove any undefineds
+      .filter(Boolean) // Remove any `undefined`s
       .filter((item, position, array) => array.indexOf(item) === position) // Dedupe
       .map((projectKey) => {
         return {
@@ -370,7 +370,7 @@ export default async (eleventyConfig) => {
 
     const imageAttributes = {
       alt,
-      class: classes.filter(item => !!item).join(' '),
+      class: classes.filter(Boolean).join(' '),
       decoding: 'async',
       loading: 'lazy',
       sizes,
