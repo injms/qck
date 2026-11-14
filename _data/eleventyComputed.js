@@ -2,6 +2,7 @@ import exifr from 'exifr'
 import i18next from 'i18next'
 import { Jimp } from 'jimp'
 
+import path from 'node:path'
 import fs from 'node:fs/promises'
 
 import cleanKey from '../_helpers/cleanKey.js'
@@ -24,8 +25,8 @@ export default {
     return layout || 'default'
   },
   layoutStylesheet: async function ({ eleventy, layout }) {
-    const filename = basename(layout, '.njk') + '.css'
-    const stylesheetPath = join(eleventy.directories.layouts, filename)
+    const filename = path.basename(layout, '.njk') + '.css'
+    const stylesheetPath = path.join(eleventy.directories.layouts, filename)
 
     try {
       await fs.access(stylesheetPath)
@@ -43,13 +44,13 @@ export default {
     if (image) return image
 
     if (type === 'photo') {
-      const folder = dirname(page.inputPath)
+      const folder = path.dirname(page.inputPath)
 
       const file = readdirSync(folder)
-        .filter(filename => extname(filename) === '.jpg')
+        .filter(filename => path.extname(filename) === '.jpg')
 
       if (file.length === 1) {
-        return join(
+        return path.join(
           path.sep,
           folder.split(path.sep).slice(2).join(path.sep),
           file[0],
@@ -137,14 +138,14 @@ export default {
   alternativeKey: function ({ alternativeKey, page: { inputPath } }) {
     if (alternativeKey) return alternativeKey
 
-    return cleanKey(dirname(inputPath))
+    return cleanKey(path.dirname(inputPath))
   },
   feedKey: function ({ feedKey, page: { inputPath, filePathStem } }) {
     if (feedKey) return feedKey
 
     const pageFolder = inputPath
       .replace(filePathStem, '')
-      .replace(extname(inputPath), '')
+      .replace(path.extname(inputPath), '')
 
     // Feeds can require a unique ID for each page, usually based on the URL.
     // This removes the trailing slashes, and replaces the middle slashes with
@@ -153,7 +154,7 @@ export default {
     //    /one/two/three/four/ => one::two::three::four
     //    /photos/beautiful-sunset/ => photos::beautiful-sunset
     //    /about/ => about
-    const key = cleanKey(dirname(inputPath))
+    const key = cleanKey(path.dirname(inputPath))
       .replace(pageFolder, '')
       .replace(/^\//, '')
       .replace(/\/$/, '')
