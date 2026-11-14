@@ -152,7 +152,7 @@ export default async (eleventyConfig) => {
   })
 
   eleventyConfig.addFilter('projectfilter', function (collection, filter) {
-    if (!filter) return collection
+    if (Boolean(filter?.trim()) === false) return collection
 
     return q.bind(collection)({ where: `data.projectKey = ${filter}` })
   })
