@@ -19,7 +19,7 @@ import isodate from './_filters/date/isodate.js'
 // Translation helper
 import _t from './_helpers/t.js'
 
-// Ensures URL and page key consistancy
+// Ensures URL and page key consistency
 import cleanKey from './_helpers/cleanKey.js'
 
 // Get the collection for the page key, and an (optional) page parameter
