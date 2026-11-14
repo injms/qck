@@ -25,13 +25,15 @@
     {%- endif %}
 
     <link rel="canonical" href="{{ site.baseURL }}{{ alternativeKey | href_to }}"
-      {% if alternativeKey | hreflang %}
+      {%- if alternativeKey | hreflang -%}
         hreflang="{{ alternativeKey | hreflang }}"
-      {% endif %}
+      {%- endif -%}
     >
 
     {% for alternative in alternatives -%}
-      <link rel="alternate" href="{{ site.baseURL }}{{ alternative.url }}" hreflang="{{ alternative.language }}">
+      {%- if alternative.current == false -%}
+        <link rel="alternate" href="{{ site.baseURL }}{{ alternative.url }}" hreflang="{{ alternative.language }}">
+      {% endif -%}
     {%- endfor %}
 
     {% if previousPhoto %}

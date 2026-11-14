@@ -114,8 +114,8 @@ export default {
       }
     }
   },
-  language: function ({ language }) {
-    return language.toLowerCase() || site.defaultLanguage
+  language: function ({ language, lang }) {
+    return language.toLowerCase() || lang || site.defaultLanguage
   },
   permalink: function ({
     permalink,
@@ -204,18 +204,24 @@ export default {
 
     const alternativeLanguages = collections.all
       .filter(({ data }) => data.alternativeKey === alternativeKey) // only this key
-      .filter(({ data }) => data.language !== language) // not this page's language please
       .map(({ data }) => {
-        const language = data.language.toLowerCase()
+        const thisLanguage = data.language.toLowerCase()
 
         return {
-          language,
-          languageName: i18n.t('locale', { lng: language }),
+          language: thisLanguage,
+          languageName: i18n.t('locale', { lng: thisLanguage }),
           url: data.page.url,
           pageTitle: data.title,
+          current: data.language === language,
         }
       })
 
-    return alternativeLanguages
+    return alternativeLanguages.sort((a, b) => {
+      return a.languageName.localeCompare(
+        b.languageName,
+        language,
+        { sensitivity: 'base' },
+      )
+    })
   },
 }
