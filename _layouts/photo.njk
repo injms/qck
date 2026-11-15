@@ -1,5 +1,7 @@
 {% extends "base.njk" %}
 
+{% set mainClass = "photo" %}
+
 {# This page's default language version `page` object #}
 {% set defaultPage = alternativeKey | get_bare('page', site.defaultLanguage) %}
 

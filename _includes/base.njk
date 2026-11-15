@@ -141,11 +141,11 @@
     {% include "components/_skip-to-content.njk" %}
     {% include "components/_header.njk" %}
 
-    {% block content %}
-      <main class="centred-container" id="content">
-        {{ content | safe }}
-      </main>
-    {% endblock %}
+    <main id="content" class="{{ mainClass | default('default') }}">
+      {% block content %}
+          {{ content | safe }}
+      {% endblock %}
+    </main>
 
     {% include "components/_language-switcher.njk" %}
     {% include "components/_footer.njk" %}

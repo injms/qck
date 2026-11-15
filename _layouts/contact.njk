@@ -1,1 +1,8 @@
 {% extends "base.njk" %}
+
+{% set mainClass="contact" %}
+
+{% block content %}
+  <h1>{{ heading | safe }}</h1>
+  {{ content | safe }}
+{% endblock %}

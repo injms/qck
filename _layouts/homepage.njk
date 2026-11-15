@@ -1,5 +1,7 @@
 {% extends "base.njk" %}
 
+{%- set mainClass="homepage" -%}
+
 {% block content %}
   <img src="{{ img.filepath }}" alt="">
   {{ content | safe }}
