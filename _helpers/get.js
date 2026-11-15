@@ -1,6 +1,5 @@
 import { get } from 'lodash-es'
 
-import cleanKey from './cleanKey.js'
 import q from './query.js'
 
 import site from '../_data/site.js'
@@ -37,8 +36,6 @@ export default function ({
   }
 
   const query = q.bind(this.ctx.collections[collectionName] || this.ctx.collections.all)
-
-  key = cleanKey(key)
 
   if (parameter !== 'date') parameter = `data.${parameter}`
 

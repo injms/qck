@@ -1,5 +1,3 @@
-import { extname } from 'path'
-
 import MarkdownIt from 'markdown-it'
 
 import cleanKey from '../_helpers/cleanKey.js'
@@ -27,7 +25,7 @@ const markdownLinkI18n = function (md) {
         // This destructures the href contents only for use in constructing the
         // key.
         let hrefPosition
-        let [[, key]] = token.attrs.filter(([attribute], i) => {
+        const [[, uri]] = token.attrs.filter(([attribute], i) => {
           if (attribute === 'href') {
             hrefPosition = i
             return true
@@ -35,18 +33,8 @@ const markdownLinkI18n = function (md) {
           return false
         })
 
-        if (key.startsWith('/')) {
-          if (key === '/') key = '/homepage/'
-
-          key = cleanKey(key)
-
-          const pageFolder = env.page.inputPath
-            .replace(env.page.filePathStem, '')
-            .replace(extname(env.page.inputPath), '')
-
-          if (key.startsWith(pageFolder) === false) {
-            key = pageFolder + key
-          }
+        if (!uri.startsWith('http')) {
+          const key = cleanKey(uri === '/' ? 'homepage' : uri)
 
           const [thisLang] = q.bind(env.collections.all)({
             select: [

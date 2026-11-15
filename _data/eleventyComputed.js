@@ -149,7 +149,7 @@ export default {
   // Each page needs a unique key so that any translations can be linked from
   // one language to the others. For example, a page in English, Spanish, and
   // French would have different files but have the same key.
-  // The key can be manually set if rqeuired - this will take precedence over
+  // The key can be manually set if required - this will take precedence over
   // the automatically generated key.
   //
   // Assumes a folder-per-page set up - not a file-per-page set up; for example:

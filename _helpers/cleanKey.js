@@ -1,15 +1,20 @@
+import path from 'node:path'
+import site from '../_data/site.js'
+
 /**
- * Eleventy defaults to ending URLs with a trailing slash; using Node's `path`
- * will lead to paths (and therefore URLs) without a trailing this. This is a
- * little thing to ensure that strings end with a trailing slash.
+ * Generates a clean key from the page path.
  *
  * @function
  * @name cleanKey
- * @param  {string} string the string that needs checking to see whether it
- * has a trailing slash on the end.
- * @returns {string} the string with a trailing slash at the end when
- * needed.
+ * @param  {string} string the path or local URI that needs converting to a key
+ * @returns {string} the generated key
  */
-const cleanKey = (string) => string.endsWith('/') ? string : `${string}/`
+const cleanKey = (string) => {
+  return path.normalize(string.trim()) // normalises the path by removing the `./` at the base, allowing for easier splitting.
+    .split(path.sep)
+    .filter(Boolean)
+    .filter(folder => folder !== site.basePagesFolder) // removes the base folder from the path - all items are in this folder, so having it at the start of the key is redundant.
+    .join('::') // prefer this to demarcate folders and items
+}
 
 export default cleanKey

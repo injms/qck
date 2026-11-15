@@ -17,9 +17,6 @@ import isodate from './_filters/date/isodate.js'
 // Translation helper
 import _t from './_helpers/t.js'
 
-// Ensures URL and page key consistency
-import cleanKey from './_helpers/cleanKey.js'
-
 // Get the collection for the page key, and an (optional) page parameter
 import get from './_helpers/get.js'
 import q from './_helpers/query.js'
@@ -101,7 +98,7 @@ export default async (eleventyConfig) => {
       const languagesThatThePageIsAvailableIn = q
         .bind(this.ctx.collections.all)({
           select: 'data.language',
-          where: `data.alternativeKey = ${cleanKey(key)}`,
+          where: `data.alternativeKey = ${key}`,
         })
         .map(({ data: { language } }) => language)
 
@@ -127,7 +124,7 @@ export default async (eleventyConfig) => {
         'data.language',
       ],
       where: [
-        `data.alternativeKey = ${cleanKey(key)}`,
+        `data.alternativeKey = ${key}`,
       ],
     })
       .map(({ data: { page: { url }, language } }) => {
@@ -165,19 +162,9 @@ export default async (eleventyConfig) => {
 
   // Links to a page in the current page's locale if available; if not, falls
   // back to linking to the default language.
-  eleventyConfig.addFilter('link_to', function (text, url, language = site.defaultLanguage) {
+  eleventyConfig.addFilter('link_to', function (text, key, language = site.defaultLanguage) {
     const thisLanguage = this.ctx.language || language
     const linkAttributes = []
-
-    const pageFolder = this.ctx.page.inputPath
-      .replace(this.ctx.page.filePathStem, '')
-      .replace(path.extname(this.ctx.page.inputPath), '')
-
-    let key = cleanKey(url)
-
-    if (url.startsWith(pageFolder) === false) {
-      key = pageFolder + url
-    }
 
     // Find alternative for this key in another language; and return only the
     // things that we need to link to the alternative page.

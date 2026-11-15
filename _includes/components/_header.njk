@@ -7,15 +7,13 @@
     <h2 id="main-navigation" class="vh">{{ 'main_navigation' | i18n }}</h2>
 
     <ul class="nvgtn-list" role="list">
-      <li class="nvgtn-list__item">
-        {{ "photos" | i18n | link_to("/photos/") | add_class('nvgtn-list__link') }}
-      </li>
-      <li class="nvgtn-list__item">
-        {{ "about" | i18n | link_to("/about/") | add_class('nvgtn-list__link') }}
-      </li>
-      <li class="nvgtn-list__item">
-        {{ "contact" | i18n | link_to("/contact/") | add_class('nvgtn-list__link') }}
-      </li>
+      {%- set nvgtn_items = ["photos", "about", "contact"] %}
+
+      {%- for item in nvgtn_items -%}
+        <li class="nvgtn-list__item">
+          {{ item | i18n | link_to(item) | add_class('nvgtn-list__link') }}
+        </li>
+      {%- endfor -%}
     </ul>
 
   </nav>
