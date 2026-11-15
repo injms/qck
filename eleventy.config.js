@@ -296,7 +296,7 @@ export default async (eleventyConfig) => {
     filename,
     alt = '',
     sizes = '100w',
-    extraClasses,
+    extraClasses = '',
     responsive = true,
     outputFormat = ['jpeg'],
   ) {
@@ -353,7 +353,11 @@ export default async (eleventyConfig) => {
 
     const imageAttributes = {
       alt,
-      class: classes.filter(Boolean).join(' '),
+      class: classes
+        .flat(Infinity)
+        .map(c => c?.trim())
+        .filter(Boolean)
+        .join(' '),
       decoding: 'async',
       loading: 'lazy',
       sizes,
