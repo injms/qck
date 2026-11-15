@@ -24,15 +24,12 @@ const site = {
       'https://inj.ms',
       'https://instagram.com/inj.ms',
       'https://github.com/injms',
-      'https://twitter.com/_injms_',
+      'https://mastodon.social/@injms',
+      'https://bsky.app/profile/inj.ms',
     ],
     publisher: [
       'https://inj.ms',
     ],
-  },
-  twitter: {
-    creator: '@_injms_',
-    site: '@_injms_',
   },
   opengraph: {
     type: 'website',
