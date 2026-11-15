@@ -298,12 +298,8 @@ export default async (eleventyConfig) => {
       .map(({ data }) => data?.projectKey) // Just the key please.
       .filter(Boolean) // Remove any `undefined`s
       .filter((item, position, array) => array.indexOf(item) === position) // Dedupe
-      .map((projectKey) => {
-        return {
-          key: projectKey,
-          nameKey: `project:${projectKey}`,
-          slug: projectKey.replace('_', '-'),
-        }
+      .map((key) => {
+        return { key }
       })
 
     return projectKeys
