@@ -5,51 +5,59 @@
 {# This page's default language version `page` object #}
 {% set defaultPage = alternativeKey | get_bare('page', site.defaultLanguage) %}
 
-{% set previousPhoto = collections['all'] | projectfilter(projectKey) | getPreviousCollectionItem(defaultPage) %}
-{% set nextPhoto = collections['all'] | projectfilter(projectKey) | getNextCollectionItem(defaultPage) %}
+{% if projectKey %}
+  {% set limit = 3 if (previousPhoto and nextPhoto) else 4 %}
 
-{% set exclusions = [
-  previousPhoto.data.alternativeKey,
-  alternativeKey,
-  nextPhoto.data.alternativeKey
-] %}
+  {% set previousPhoto = collections['photos'] | projectfilter(projectKey) | getPreviousCollectionItem(defaultPage) %}
+  {% set nextPhoto = collections['photos'] | projectfilter(projectKey) | getNextCollectionItem(defaultPage) %}
 
-{% set limit = 3 if (previousPhoto and nextPhoto) else 4 %}
-{% set randomCollection = collections['all'] | projectfilter(projectKey) | exclude(exclusions) | shuffle | limit_to(limit) %}
+  {% set exclusions = [
+    previousPhoto.data.alternativeKey,
+    alternativeKey,
+    nextPhoto.data.alternativeKey
+  ] %}
+{% else %}
+  {% set limit = 5 %}
+  {% set exclusions = [ alternativeKey ] %}
+{% endif %}
+
+{% set randomCollection = collections['photos'] | projectfilter(projectKey) | exclude(exclusions) | shuffle | limit_to(limit) %}
 
 {% block content %}
-  <main class="wrapper">
-    <section>
-      <h1>{{ title }}</h1>
-      {{ content | safe }}
-
+  <section>
+    <h1>{{ title }}</h1>
+    <figure class="frame" style="--custom-background: {{ imageMetadata.dominantColour if imageMetadata.dominantColour else "var(--wizard_grey)"}};">
       {% if image %}
         {% image image, "alt", "100w" %}
       {% endif %}
-    </section>
-    <aside>
-      {% if previousPhoto %}
-        <div class="previous-photo">
-          {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | add_class('previous-link')  | add_rel('previous')}}
-          {# {% image previousPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
-        </div>
-      {% endif %}
+      <figcaption class="frame__caption">
+        {{ content | safe }}
+      </figcaption>
+    </figure>
+  </section>
 
-      {% if randomCollection | length > 0 %}
-        {% for r in randomCollection %}
-          <div class="random-photos">
-            {{ r.data.alternativeKey | get('title') | link_to(r.data.alternativeKey) | add_class('random-link') }}
-            {# {% image r.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
-          </div>
-        {% endfor %}
-      {% endif %}
+  <aside class="related-photos">
+    {% if previousPhoto %}
+      <div class="previous-photo">
+        {{ previousPhoto.data.alternativeKey | get('title') | link_to(previousPhoto.data.alternativeKey) | add_class('previous-link')  | add_rel('previous')}}
+        {% image previousPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %}
+      </div>
+    {% endif %}
 
-      {% if nextPhoto %}
-        <div class="next-photo">
-          {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | add_class('next-link') | add_rel('next') }}
-          {# {% image nextPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %} #}
+    {% if randomCollection | length > 0 %}
+      {% for r in randomCollection %}
+        <div class="random-photos">
+          {{ r.data.alternativeKey | get('title') | link_to(r.data.alternativeKey) | add_class('random-link') }}
+          {% image r.data.alternativeKey | get_bare('image'), "", "100vw" %}
         </div>
-      {% endif %}
-    </aside>
-  </main>
+      {% endfor %}
+    {% endif %}
+
+    {% if nextPhoto %}
+      <div class="next-photo">
+        {{ nextPhoto.data.alternativeKey | get('title') | link_to(nextPhoto.data.alternativeKey) | add_class('next-link') | add_rel('next') }}
+        {% image nextPhoto.data.alternativeKey | get_bare('image'), "", "100vw" %}
+      </div>
+    {% endif %}
+  </aside>
 {% endblock %}
