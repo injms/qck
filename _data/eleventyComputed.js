@@ -186,11 +186,6 @@ export default {
 
     return key
   },
-  pageID: function ({ pageID, page: { inputPath } }) {
-    if (pageID) return pageID
-
-    return inputPath
-  },
 
   // ---------------------------------------------------------------------------
   // alternatives - array of objects
