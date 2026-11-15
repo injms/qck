@@ -3,12 +3,13 @@
 {% block content %}
     <h1>{{ 'projects' | i18n(language) }}</h1>
     {% for project in collections.projects %}
+      <a href="#{{ project.key | slugify }}">#</a>
       <h2>
-        <a href="#{{ project.key | slugify }}">#</a>
         {{ ("project:" + project.key) | i18n | speciesify | add_id(project.key | slugify) }}
       </h2>
-      <ul class="photo-list" data-list-length="{{ collections.photos | projectfilter(project.key) | length }}">
-        {% for photo in collections.photos | projectfilter(project.key) %}
+
+      <ul class="photo-list" data-list-length="{{ project.collection | length }}">
+        {% for photo in project.collection %}
             <li class="photo-list__item">
               <figure class="photo-list__item-frame">
                 <figcaption class="photo-list__item-caption">
