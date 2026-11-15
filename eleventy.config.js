@@ -3,6 +3,7 @@ import path from 'node:path'
 import { load as cheerio } from 'cheerio'
 
 import Image from '@11ty/eleventy-img'
+import { I18nPlugin } from '@11ty/eleventy'
 
 import markdownify from './_filters/markdownify.js'
 import speciesify from './_filters/speciesify.js'
@@ -36,6 +37,10 @@ const { markSafe } = nunjucks.runtime
 
 // Where the magic happens
 export default async (eleventyConfig) => {
+  eleventyConfig.addPlugin(I18nPlugin, {
+    defaultLanguage: 'en-gb',
+  })
+
   // We want Eleventy to ignore the Sass files, but we don't want git to ignore
   // them - we need to tell Eleventy to ignore the `.gitignore` file (lol) and
   // _only_ use the `.eleventyignore` file.
