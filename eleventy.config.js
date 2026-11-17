@@ -1,6 +1,7 @@
 import path from 'node:path'
 
 import { load as cheerio } from 'cheerio'
+import { minify } from 'html-minifier-terser'
 
 import Image from '@11ty/eleventy-img'
 import { I18nPlugin } from '@11ty/eleventy'
@@ -39,6 +40,19 @@ const { markSafe } = nunjucks.runtime
 export default async (eleventyConfig) => {
   eleventyConfig.addPlugin(I18nPlugin, {
     defaultLanguage: 'en-gb',
+  })
+
+  eleventyConfig.addTransform('htmlmin', function (content) {
+    if ((this.page.outputPath || '').endsWith('.html')) {
+      return minify(content, {
+        collapseBooleanAttributes: true,
+        collapseWhitespace: true,
+        removeComments: false,
+        useShortDoctype: true,
+      })
+    }
+
+    return content
   })
 
   // We want Eleventy to ignore the Sass files, but we don't want git to ignore
