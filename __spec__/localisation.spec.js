@@ -1,8 +1,4 @@
-import {
-  existsSync,
-  statSync,
-  readFileSync,
-} from 'fs'
+import fs from 'node:fs'
 
 import { load as cheerio } from 'cheerio'
 
@@ -40,23 +36,23 @@ const checkFolderStructure = () => {
 
   expected.directories.forEach(directory => {
     assert(
-      existsSync(`./site/${directory}`),
+      fs.existsSync(`./site/${directory}`),
       `Directory '${directory}' does not exist.`,
     )
 
     assert(
-      statSync(`./site/${directory}`).isDirectory() === true,
+      fs.statSync(`./site/${directory}`).isDirectory() === true,
       `'${directory}' is not a directory.`,
     )
   })
 
   expected.files.forEach(file => {
     assert(
-      existsSync(`./site/${file}`),
+      fs.existsSync(`./site/${file}`),
       `File '${file}' does not exist.`,
     )
     assert(
-      statSync(`./site/${file}`).isDirectory() === false,
+      fs.statSync(`./site/${file}`).isDirectory() === false,
       `'${file}' is a directory.`,
     )
   })
@@ -78,7 +74,7 @@ const checkRelAlternate = () => {
   }
 
   expected.files.forEach(file => {
-    const markup = readFileSync(`./site/${file}`, 'utf-8')
+    const markup = fs.readFileSync(`./site/${file}`, 'utf-8')
     const $ = cheerio(markup)
 
     assert(
@@ -144,7 +140,7 @@ const checkLinksInBody = () => {
   }
 
   expected.files.forEach(file => {
-    const markup = readFileSync(`./site/${file}`, 'utf-8')
+    const markup = fs.readFileSync(`./site/${file}`, 'utf-8')
     const $ = cheerio(markup)
     const lang = $('html').attr('lang')
 
