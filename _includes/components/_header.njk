@@ -1,17 +1,17 @@
 <link rel="stylesheet" href="/assets/stylesheets/_header.css">
 
 <header class="hdr">
-  {{ 'site_name' | i18n | link_to('/homepage/') | add_class('hdr__logo') }}
+  {{ "site_name" | i18n | link_to("homepage") | add_class("hdr__logo") }}
 
   <nav class="nvgtn" aria-labelledby="main-navigation">
-    <h2 id="main-navigation" class="vh">{{ 'main_navigation' | i18n }}</h2>
+    <h2 id="main-navigation" class="vh">{{ "main_navigation" | i18n }}</h2>
 
     <ul class="nvgtn-list" role="list">
       {%- set nvgtn_items = ["photos", "about", "contact"] %}
 
       {%- for item in nvgtn_items -%}
         <li class="nvgtn-list__item">
-          {{ item | i18n | link_to(item) | add_class('nvgtn-list__link') }}
+          {{ item | i18n | link_to(item) | add_class("nvgtn-list__link") }}
         </li>
       {%- endfor -%}
     </ul>
