@@ -99,7 +99,7 @@ const checkRelAlternate = () => {
 
     assert(
       $('a[rel="alternate"]').length === expected.length,
-      `Incorrect number of a[rel="alternate"] - expected ${expected.length}, found ${$('a[rel="alternate"]').length}`,
+      `Incorrect number of a[rel="alternate"] in ${file} - expected ${expected.length}, found ${$('a[rel="alternate"]').length}`,
     )
 
     $('a[rel="alternate"]').each((_k, { attribs }) => {
